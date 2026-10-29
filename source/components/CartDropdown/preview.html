@@ -1,0 +1,72 @@
+<!-- @dsCard group="Commerce" height=458 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>CartDropdown</title>
+<style>body{margin:0;padding:16px;background:var(--bg-default);color:var(--text-primary);font-family:var(--font-sans)}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.g{display:flex;flex-wrap:wrap;gap:24px 32px;align-items:flex-start}.col{display:flex;flex-direction:column;gap:20px}</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+/* Doc helpers shared by component previews: captions (V), sample data, and the Playground control bar. Not part of the NSL API. */
+(function () {
+  var h = React.createElement, useState = React.useState;
+  window.V = function (l, el) { return h('div', { className: 'nsl-v' }, h('div', { className: 'nsl-v__l' }, l), el); };
+  window.SPECS = [{ icon: 'form', text: '1U Rackmount' }, { icon: 'cpu', text: '2x 6140 2.3GHz = 36 Cores' }, { icon: 'ram', text: '768GB 2666MHz', note: '(24 x DDR4)' }, { icon: 'storage', text: '2x 7.68TB SFF 2.5"', note: '(Hot Swap)' }, { icon: 'raid', text: 'P816i-a 4GB expander Raid Controller' }, { icon: 'network', text: 'HP Ethernet 1Gb 2-port 361i Adapter' }];
+  window.CAGE = [{ label: '12LFF', text: '12 × 3.5" SAS / SATA / SSD (front side)' }, { label: '4LFF', text: '4 × 3.5" SAS / SATA / SSD (cage inside the server)' }, { label: '2SFF', text: '2 × 2.5" SAS / SATA / SSD (backside)' }];
+  window.PS = [{ title: 'Server models', items: ['Dell PowerEdge R740', 'Dell PowerEdge R740xd', 'Dell PowerEdge R740xd2'] }, { title: 'Chassis', items: ['Dell PowerEdge R740 16SFF', { label: 'Dell PowerEdge R740 8LFF', active: true }, 'Dell PowerEdge R740xd 12LFF + 2LFF + 4NVMe', 'Dell PowerEdge R740xd 24SFF (24 NVMe)'], more: { label: 'Show all chassis (13)' } }, { title: 'Storages', items: ['HPE 3PAR 7400 2N', 'HPE 3PAR 7400c 2N'] }, { title: 'Articles', items: ['Adding Disks to Dell PowerEdge R740xd2', 'Dell EMC PowerEdge R740 server overview', 'Dell PowerEdge R740xd2 – Speeding Up Array Reconstruction'] }];
+
+  /* Playground({ component, controls, base, children, wrap })
+     controls: [{ prop, label?, type: 'enum'|'bool'|'text'|'number', options?, value, map? }]
+     map(value) turns a control value into the prop value (e.g. a count into a slice of specs). */
+  window.Playground = function (p) {
+    var init = {}; p.controls.forEach(function (c) { init[c.prop] = c.value; });
+    var s = useState(init), st = s[0], set = function (k, v) { var n = Object.assign({}, st); n[k] = v; s[1](n); };
+    var props = Object.assign({}, p.base || {});
+    p.controls.forEach(function (c) { var v = st[c.prop]; props[c.prop] = c.map ? c.map(v) : v; });
+    var code = '<' + (p.name || 'Component') + p.controls.map(function (c) {
+      var v = st[c.prop];
+      if (c.type === 'bool') return v ? ' ' + c.prop : '';
+      if (v === undefined || v === '' || v === c.omit) return '';
+      return typeof v === 'string' ? ' ' + c.prop + '="' + v + '"' : ' ' + c.prop + '={' + JSON.stringify(v) + '}';
+    }).join('') + (p.childText ? '>' + p.childText + '</' + (p.name || 'Component') + '>' : ' />');
+    props.key = JSON.stringify(st);
+    var el = h(p.component, props, p.childText);
+    return h('div', { className: 'pg' },
+      h('div', { className: 'pg__bar' }, p.controls.map(function (c) {
+        var v = st[c.prop], ctl;
+        if (c.type === 'enum') ctl = h('div', { className: 'pg__seg', role: 'radiogroup', 'aria-label': c.prop }, c.options.map(function (o) {
+          var val = typeof o === 'object' ? o.value : o, lab = typeof o === 'object' ? o.label : String(o);
+          return h('button', { key: lab, type: 'button', role: 'radio', 'aria-checked': v === val, className: v === val ? 'is-on' : '', onClick: function () { set(c.prop, val); } }, lab);
+        }));
+        else if (c.type === 'bool') ctl = h('button', { type: 'button', role: 'switch', 'aria-checked': !!v, className: 'pg__sw' + (v ? ' is-on' : ''), onClick: function () { set(c.prop, !v); } }, h('span'));
+        else if (c.type === 'number') ctl = h('div', { className: 'pg__seg' }, h('button', { type: 'button', onClick: function () { set(c.prop, Math.max(c.min || 0, v - 1)); } }, '−'), h('span', { className: 'pg__num' }, v), h('button', { type: 'button', onClick: function () { set(c.prop, Math.min(c.max || 99, v + 1)); } }, '+'));
+        else ctl = h('input', { className: 'pg__txt', value: v, onChange: function (e) { set(c.prop, e.target.value); } });
+        return h('label', { key: c.prop, className: 'pg__ctl' }, h('span', { className: 'pg__k' }, c.label || c.prop), ctl);
+      })),
+      h('div', { className: 'pg__stage' + (p.dark ? ' nsl-gradient' : '') }, p.wrap ? p.wrap(el) : el),
+      h('code', { className: 'pg__code' }, code));
+  };
+  var css = '.pg{border:1px solid var(--border-default);border-radius:8px;overflow:hidden;margin-bottom:28px}' +
+    '.pg__bar{display:flex;flex-wrap:wrap;gap:10px 20px;padding:10px 12px;background:var(--bg-subtle);border-bottom:1px solid var(--border-default)}' +
+    '.pg__ctl{display:flex;align-items:center;gap:8px;font:400 11px/16px var(--font-mono);color:var(--text-secondary)}' +
+    '.pg__seg{display:inline-flex;border:1px solid var(--border-default);border-radius:6px;overflow:hidden;background:var(--bg-default)}' +
+    '.pg__seg button{border:0;border-right:1px solid var(--border-default);background:transparent;padding:3px 8px;font:500 11px/16px var(--font-mono);color:var(--text-primary);cursor:pointer}' +
+    '.pg__seg button:last-child{border-right:0}.pg__seg button:hover{background:var(--bg-muted)}' +
+    '.pg__seg button.is-on{background:var(--text-primary);color:var(--bg-default)}' +
+    '.pg__num{padding:3px 8px;font:600 11px/16px var(--font-mono);color:var(--text-primary);border-right:1px solid var(--border-default)}' +
+    '.pg__sw{position:relative;width:28px;height:16px;border:0;border-radius:8px;background:var(--neutral-300);cursor:pointer;padding:0}' +
+    '.pg__sw span{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .12s}' +
+    '.pg__sw.is-on{background:var(--text-primary)}.pg__sw.is-on span{transform:translateX(12px)}' +
+    '.pg__txt{width:140px;padding:2px 6px;border:1px solid var(--border-default);border-radius:4px;font:400 12px/16px var(--font-sans);color:var(--text-primary)}' +
+    '.pg__stage{padding:24px;display:flex;align-items:flex-start;min-height:56px}' +
+    '.pg__code{display:block;padding:8px 12px;border-top:1px solid var(--border-default);font:400 11px/16px var(--font-mono);color:var(--text-secondary);white-space:pre-wrap;word-break:break-word;background:var(--bg-default)}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+})();
+
+</script>
+<script>
+var N = window.NSL, h = React.createElement;
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'g'}, V('with items', h(N.CartDropdown,{items:[{title:'Dell PowerEdge R740',meta:'2× Intel Xeon Gold · 128GB RAM',price:4884},{title:'SSD 800GB SATA 2.5" 6Gb/s',meta:'Tray caddy included',price:680},{title:'HDD 4TB SAS 3.5" 12Gb/s',meta:'Tray caddy included',price:340}]})), V('empty', h(N.CartDropdown,{items:[]}))));
+</script>
+</body>
+</html>

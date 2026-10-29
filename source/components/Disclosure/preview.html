@@ -1,0 +1,9 @@
+<!-- @dsCard group="Display" height=300 -->
+<div id="root" style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;align-items:start"></div>
+<script>
+var h = React.createElement, N = window.NSL;
+ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+  h(N.Disclosure, { title: 'Add details to speed things up', description: 'Problem area and budget — about 10 seconds', badge: 'Optional' }, 'Fields'),
+  h(N.Disclosure, { title: 'Add details to speed things up', description: 'Already noted: Storage & RAID', badge: 'Optional', defaultOpen: true },
+    h(N.ChipGroup, { label: 'Where are you stuck?', multiple: true, defaultValue: ['storage'], options: ['Processor', 'Memory', { value: 'storage', label: 'Storage & RAID' }] }))));
+</script>

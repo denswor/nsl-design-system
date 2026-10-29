@@ -1,0 +1,8 @@
+<!-- @dsCard group="Forms" height=260 -->
+<div id="root" style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:860px"></div>
+<script>
+var h = React.createElement, N = window.NSL;
+ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+  h(N.Textarea, { label: 'Describe what you need', placeholder: 'In your own words — what are you building, and where are you stuck?', helper: 'Plain language is perfect — no exact specs needed.', rows: 5 }),
+  h(N.Textarea, { label: 'Notes', size: 'md', optional: true, rows: 3, maxLength: 500, defaultValue: 'Need delivery to Frankfurt before Nov 20.' })));
+</script>

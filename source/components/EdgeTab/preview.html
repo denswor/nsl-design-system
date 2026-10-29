@@ -1,0 +1,8 @@
+<!-- @dsCard group="Actions" height=220 -->
+<div id="root" style="position:relative;height:200px;background:var(--bg-subtle);overflow:hidden"></div>
+<script>
+var h = React.createElement, N = window.NSL;
+ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+  h(N.EdgeTab, { inline: true, top: 16, style: { right: '200px' } }),
+  h(N.EdgeTab, { inline: true, top: 16, open: true })));
+</script>

@@ -1,0 +1,8 @@
+<!-- @dsCard group="Navigation" height=100 -->
+<div id="root" style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:860px"></div>
+<script>
+var h = React.createElement, N = window.NSL;
+ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+  h(N.StepProgress, { steps: ['Your request', 'Details', 'Contact'], current: 1 }),
+  h(N.StepProgress, { steps: ['Your request', 'Details', 'Contact'], current: 3 })));
+</script>

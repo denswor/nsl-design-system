@@ -1,0 +1,9 @@
+<!-- @dsCard group="Feedback" height=460 subtitle="No scrim: the page stays usable" -->
+<div id="root" style="position:relative;height:440px;background:var(--bg-subtle);overflow:hidden"></div>
+<script>
+var h = React.createElement, N = window.NSL;
+ReactDOM.createRoot(document.getElementById('root')).render(h(N.Drawer, { inline: true, width: 400, title: 'Ask a specialist', description: 'Write it your way — a real engineer will reply.', onClose: function () {},
+  footer: h(React.Fragment, null, h(N.Button, { variant: 'primary', fullWidth: true }, 'Send to a specialist'), h('span', { style: { font: '400 12px/16px var(--font-sans)', color: 'var(--text-secondary)', textAlign: 'center' } }, 'Goes straight to a NewServerLife specialist.')) },
+  h(N.ContextCard, { eyebrow: 'Your current build is attached automatically', title: 'PowerEdge R760 24SFF · 12 of 13 set' }),
+  h(N.Textarea, { label: 'Describe what you need', rows: 4 })));
+</script>

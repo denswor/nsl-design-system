@@ -1,0 +1,8 @@
+<!-- @dsCard group="Forms" height=150 -->
+<div id="root" style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:860px"></div>
+<script>
+var h = React.createElement, N = window.NSL;
+ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+  h(N.FileAttach, { title: 'Attach a spec, RFQ or screenshot', hint: 'PDF, Excel, Word or images · optional', accept: '.pdf,.xls,.xlsx,.doc,.docx,image/*' }),
+  h(N.FileAttach, { defaultFiles: [{ name: 'it-requirements.pdf', meta: 'PDF · 240 KB' }], readyLabel: 'ready to send' })));
+</script>

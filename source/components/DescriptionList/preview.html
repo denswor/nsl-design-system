@@ -1,0 +1,9 @@
+<!-- @dsCard group="Display" height=260 -->
+<div id="root" style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:900px"></div>
+<script>
+var h = React.createElement, N = window.NSL;
+var rows = [{ term: 'CPU', description: '1× Intel Xeon Gold 5420+ 2.00 GHz 28 Core' }, { term: 'RAM', description: '2× 32GB DDR5 PC5-38400 4800MHz RDIMM', note: '2 ea. / 64 GB' }, { term: 'Remote Admin', description: 'iDRAC9 Enterprise' }, { term: 'Storage drives', description: 'Not chosen yet', muted: true }];
+ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+  h(N.DescriptionList, { items: rows, divided: true, termWidth: 120 }),
+  h(N.DescriptionList, { items: rows, layout: 'stacked' })));
+</script>

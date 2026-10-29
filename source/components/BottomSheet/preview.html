@@ -1,0 +1,8 @@
+<!-- @dsCard group="Feedback" height=560 -->
+<div id="root" style="position:relative;width:390px;height:540px;background:var(--bg-default);overflow:hidden"></div>
+<script>
+var h = React.createElement, N = window.NSL;
+ReactDOM.createRoot(document.getElementById('root')).render(h(N.BottomSheet, { inline: true, title: 'Ask a specialist', onClose: function () {}, footer: h(N.Button, { variant: 'primary', fullWidth: true }, 'Send to a specialist') },
+  h(N.Textarea, { label: 'Describe what you need', rows: 3 }),
+  h(N.ChipGroup, { label: 'How soon?', fullWidth: true, size: 'md', defaultValue: 'today', options: [{ value: 'today', label: 'Today' }, { value: 'norush', label: 'No rush' }] })));
+</script>

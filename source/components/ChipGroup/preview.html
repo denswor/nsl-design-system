@@ -1,0 +1,8 @@
+<!-- @dsCard group="Forms" height=200 -->
+<div id="root" style="padding:16px;display:flex;flex-direction:column;gap:24px;max-width:520px"></div>
+<script>
+var h = React.createElement, N = window.NSL;
+ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+  h(N.ChipGroup, { label: 'Where are you stuck?', multiple: true, defaultValue: ['storage'], options: [{ value: 'cpu', label: 'Processor' }, { value: 'ram', label: 'Memory' }, { value: 'storage', label: 'Storage & RAID' }, { value: 'gpu', label: 'GPU' }, { value: 'net', label: 'Network' }, { value: 'compat', label: 'Part compatibility' }] }),
+  h(N.ChipGroup, { label: 'Preferred channel', defaultValue: 'phone', options: [{ value: 'phone', label: 'Phone call' }, { value: 'email', label: 'Email' }, { value: 'whatsapp', label: 'WhatsApp' }] })));
+</script>
