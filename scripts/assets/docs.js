@@ -16,7 +16,8 @@
   if (menu) menu.addEventListener('click', function () { var on = document.body.classList.toggle('nav-open'); menu.setAttribute('aria-expanded', String(on)); });
   document.addEventListener('click', function (e) { if (document.body.classList.contains('nav-open') && !e.target.closest('.layout__side, .top__menu')) { document.body.classList.remove('nav-open'); menu.setAttribute('aria-expanded', 'false'); } });
   var cur = document.querySelector('.side a[aria-current="page"]');
-  if (cur) cur.scrollIntoView({ block: 'center' });
+  var sideEl = document.querySelector('.layout__side');
+  if (cur && sideEl) sideEl.scrollTop = Math.max(0, cur.offsetTop - sideEl.clientHeight / 2);
 
   /* sidebar search */
   var q = document.getElementById('navSearch');

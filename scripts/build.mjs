@@ -180,8 +180,8 @@ function nav(prefix, current) {
   return `<nav class="side" aria-label="Documentation">
   <div class="side__search"><input type="search" id="navSearch" placeholder="Search components" aria-label="Search components" autocomplete="off"><kbd>/</kbd></div>
   <div class="side__sec"><div class="side__h">Overview</div>${link('index.html', 'Introduction', 'home')}${link('getting-started.html', 'Getting started', 'start')}${link('guidelines.html', 'Guidelines', 'guidelines')}</div>
-  <div class="side__sec"><div class="side__h">Foundations</div>${link('foundations/colors.html', 'Color', 'colors')}${link('foundations/typography.html', 'Typography', 'type')}${link('foundations/spacing.html', 'Spacing &amp; elevation', 'spacing')}${link('foundations/icons.html', 'Icons', 'icons')}</div>
-  ${groups.map((g) => `<div class="side__sec" data-group><div class="side__h">${esc(g.name)}</div>${g.items.map((c) => link('components/' + c.slug + '.html', esc(c.name), 'c:' + c.name)).join('')}</div>`).join('\n  ')}
+  <div class="side__sec"><div class="side__h">Foundations</div>${link('foundations/colors.html', 'Color', 'colors')}${link('foundations/typography.html', 'Typography', 'type')}${link('foundations/spacing.html', 'Spacing &amp; elevation', 'spacing')}${link('foundations/icons.html', 'Icons', 'icons')}${(groups.find((g) => g.name === 'Foundations') || { items: [] }).items.map((c) => link('components/' + c.slug + '.html', esc(c.name) + ' <span class="side__tag">component</span>', 'c:' + c.name)).join('')}</div>
+  ${groups.filter((g) => g.name !== 'Foundations').map((g) => `<div class="side__sec" data-group><div class="side__h">${esc(g.name)}</div>${g.items.map((c) => link('components/' + c.slug + '.html', esc(c.name), 'c:' + c.name)).join('')}</div>`).join('\n  ')}
 </nav>`;
 }
 function page({ title, prefix = '', current, body, description }) {
@@ -350,7 +350,7 @@ const homeBody = `<article class="doc doc--home">
 <h2>Foundations</h2>
 <div class="cards cards--4"><a class="card" href="foundations/colors.html"><b>Color</b><span>Semantic and primitive tokens, two themes.</span></a><a class="card" href="foundations/typography.html"><b>Typography</b><span>IBM Plex Mono and Sans, ${tokens.type.groups.reduce((n, g) => n + g.styles.length, 0)} styles.</span></a><a class="card" href="foundations/spacing.html"><b>Spacing &amp; elevation</b><span>Spacing, radius, shadow, layout.</span></a><a class="card" href="foundations/icons.html"><b>Icons</b><span>Feather, hardware and header sets.</span></a></div>
 <h2>Components</h2>
-${groups.map((g) => `<h3>${esc(g.name)}</h3><div class="cards">${g.items.map((c) => `<a class="card" href="components/${c.slug}.html"><b>${esc(c.name)}</b><span>${esc((c.lead || '').replace(/[`*]/g, '').slice(0, 140))}</span></a>`).join('')}</div>`).join('')}
+${groups.map((g) => `<h3>${esc(g.name === 'Foundations' ? 'Brand & icons' : g.name)}</h3><div class="cards">${g.items.map((c) => `<a class="card" href="components/${c.slug}.html"><b>${esc(c.name)}</b><span>${esc((c.lead || '').replace(/[`*]/g, '').slice(0, 140))}</span></a>`).join('')}</div>`).join('')}
 </article>`;
 write(path.join(OUT, 'index.html'), page({ title: 'Introduction', current: 'home', body: homeBody }));
 
