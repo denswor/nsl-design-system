@@ -254,6 +254,31 @@ function TopNavItem(p) {
   return h('span', { className: 'nsl-topnav__wrap', onMouseEnter: open, onMouseLeave: close, onFocus: open, onBlur: function (e) { if (!e.currentTarget.contains(e.relatedTarget)) close(); } },
     link, on && h('div', { className: 'nsl-topnav__menu' }, p.menu));
 }
+function TopNav(p) {
+  var items = (p.items || DEFAULT_NAV).map(function (x) { return typeof x === 'string' ? { label: x } : x; });
+  var ref = useRef(null), meas = useRef(null);
+  var s = useState(items.length); var fit = s[0];
+  React.useLayoutEffect(function () {
+    var el = ref.current, m = meas.current; if (!el || !m) return;
+    function calc() {
+      var avail = el.clientWidth, kids = m.children, gap = 12, more = kids[kids.length - 1].offsetWidth, used = 0, n = 0;
+      var widths = []; for (var i = 0; i < kids.length - 1; i++) widths.push(kids[i].offsetWidth);
+      var total = widths.reduce(function (a, b) { return a + b; }, 0) + gap * (widths.length - 1);
+      if (total <= avail) { if (fit !== widths.length) s[1](widths.length); return; }
+      for (var j = 0; j < widths.length; j++) { var next = used + (j ? gap : 0) + widths[j]; if (next + gap + more > avail) break; used = next; n = j + 1; }
+      if (n !== fit) s[1](n);
+    }
+    calc();
+    var ro = new ResizeObserver(calc); ro.observe(el); return function () { ro.disconnect(); };
+  });
+  var cloud = function (x) { return x.label === 'Cloud' && p.cloudMenu !== false ? h(CloudDropdown, p.cloudMenu && p.cloudMenu !== true ? p.cloudMenu : {}) : undefined; };
+  var shown = items.slice(0, fit), hidden = items.slice(fit);
+  var hiddenActive = hidden.some(function (x) { return x.label === p.active; });
+  return h('nav', { ref: ref, className: cx('nsl-topnav', p.className), 'aria-label': 'Main' },
+    h('div', { ref: meas, className: 'nsl-topnav__measure', 'aria-hidden': true }, items.map(function (x) { return h('span', { key: x.label, className: 'nsl-topnav__item' + (x.label === p.active ? ' is-active' : '') }, x.label); }), h('span', { className: 'nsl-topnav__item nsl-topnav__more' }, h(Icon, { name: 'more-horizontal', size: 16 }))),
+    shown.map(function (x) { return h(TopNavItem, { key: x.label, href: x.href, active: x.label === p.active, menu: cloud(x) }, x.label); }),
+    hidden.length > 0 && h(TopNavItem, { key: '__more', active: hiddenActive, menu: h('ul', { className: 'nsl-topnav__overflow' }, hidden.map(function (x) { return h('li', { key: x.label }, h('a', { href: x.href || '#', className: x.label === p.active ? 'is-active' : undefined, 'aria-current': x.label === p.active ? 'page' : undefined }, x.label)); })) }, h('span', { className: 'nsl-topnav__more', 'aria-label': 'More: ' + hidden.map(function (x) { return x.label; }).join(', ') }, h(Icon, { name: 'more-horizontal', size: 16 }))));
+}
 function CloudDropdown(p) {
   return h('div', { className: cx('nsl-clouddd', p.className) },
     h(CloudLogo, { height: 42 }),
@@ -348,9 +373,15 @@ function Header(p) {
   var sug = typeof p.searchSuggestions === 'function' ? p.searchSuggestions(q[0]) : p.searchSuggestions;
   var showSug = o[0] === 'search' && sug && sug.length > 0 && q[0].length >= (p.minQuery || 1);
   var cartOn = o[0] === 'cart';
+  var sugRef = useRef(null);
+  React.useLayoutEffect(function () {
+    var el = sugRef.current; if (!el) return;
+    function fit() { el.style.left = '0px'; var r = el.getBoundingClientRect(), vw = document.documentElement.clientWidth; if (r.right > vw - 16) el.style.left = Math.min(0, vw - 16 - r.right) + 'px'; }
+    fit(); window.addEventListener('resize', fit); return function () { window.removeEventListener('resize', fit); };
+  });
   return h('header', { ref: root, className: cx('nsl-header', o[0] && 'is-open-' + o[0], p.className) },
     h('div', { className: 'nsl-header__top nsl-gradient nsl-on-dark' },
-      h('nav', { className: 'nsl-topnav', 'aria-label': 'Main' }, nav.map(function (n) { return h(TopNavItem, { key: n, active: n === active, menu: n === 'Cloud' && p.cloudMenu !== false ? h(CloudDropdown, p.cloudMenu && p.cloudMenu !== true ? p.cloudMenu : {}) : undefined }, n); })),
+      h(TopNav, { items: nav, active: active, cloudMenu: p.cloudMenu }),
       h('div', { className: 'nsl-header__contacts' }, h(StatusIndicator, { online: p.online !== false }),
         h('a', { className: 'nsl-contact', href: 'mailto:' + (p.email || 'sales@newserverlife.com') }, h(Icon, { name: 'mail', size: 16 }), p.email || 'sales@newserverlife.com'),
         h('a', { className: 'nsl-contact', href: 'tel:' + (p.phone || '+1 (754) 236-9435').replace(/[^+\d]/g, '') }, h(Icon, { name: 'phone', size: 16 }), p.phone || '+1 (754) 236-9435'))),
@@ -359,7 +390,7 @@ function Header(p) {
       h(CatalogButton, { open: o[0] === 'catalog' || p.catalogOpen, onClick: function () { tog('catalog'); if (p.onCatalog) p.onCatalog(); } }),
       h('div', { className: 'nsl-header__searchwrap', onFocus: function () { set('search'); } },
         h(SearchField, { className: 'nsl-header__search', placeholder: p.searchPlaceholder || 'Search here...', value: q[0], onChange: function (v) { q[1](v); if (o[0] !== 'search') set('search'); }, onSearch: function (v) { set(null); if (p.onSearch) p.onSearch(v); } }),
-        showSug && h(PredictiveSearch, { className: 'nsl-header__suggest', query: q[0], groups: sug, allResults: p.allResults })),
+        showSug && h('div', { ref: sugRef, className: 'nsl-header__suggest' }, h(PredictiveSearch, { query: q[0], groups: sug, allResults: p.allResults }))),
       p.sam !== false && h(SamRegistered, typeof p.sam === 'object' ? p.sam : {}),
       p.badge,
       h('div', { className: 'nsl-header__actions' }, h(HeaderAccount, { href: p.accountHref }),
@@ -924,5 +955,5 @@ function BottomSheet(p) {
   return h('div', { className: cx('nsl-sheet-wrap', p.inline && 'is-inline', p.scrim === false && 'no-scrim', p.className), onClick: function (e) { if (e.target === e.currentTarget && p.onClose) p.onClose(); } }, sheet);
 }
 
-window.NSL = Object.assign(window.NSL || {}, {Icon: Icon, Logo: Logo, Button: Button, ButtonGroup: ButtonGroup, CatalogButton: CatalogButton, Link: Link, CloseButton: CloseButton, Input: Input, SearchField: SearchField, PredictiveSearch: PredictiveSearch, Select: Select, Checkbox: Checkbox, Radio: Radio, Toggle: Toggle, CheckboxGroup: CheckboxGroup, RadioGroup: RadioGroup, NumberStepper: NumberStepper, Slider: Slider, PriceRange: PriceRange, Tabs: Tabs, Pagination: Pagination, Breadcrumbs: Breadcrumbs, TopNavItem: TopNavItem, CloudDropdown: CloudDropdown, StatusIndicator: StatusIndicator, Header: Header, SamRegistered: SamRegistered, SamApproved: SamApproved, CatalogMenu: CatalogMenu, MobileHeader: MobileHeader, MobileNav: MobileNav, HeaderCart: HeaderCart, HeaderAccount: HeaderAccount, Footer: Footer, Tag: Tag, ProductBadge: ProductBadge, CountBadge: CountBadge, Avatar: Avatar, StarRating: StarRating, Price: Price, Notification: Notification, Toast: Toast, SpecList: SpecList, Tooltip: Tooltip, Popover: Popover, Skeleton: Skeleton, EmptyState: EmptyState, Accordion: Accordion, Table: Table, ImageFrame: ImageFrame, ProductGallery: ProductGallery, ProductCard: ProductCard, ModelCard: ModelCard, ConfiguratorRow: ConfiguratorRow, CartLineItem: CartLineItem, CartDropdown: CartDropdown, ReviewCard: ReviewCard, ArticleCard: ArticleCard, Modal: Modal, FilterPanel: FilterPanel, SearchSummary: SearchSummary, SectionHeader: SectionHeader, SearchResult: SearchResult, FilterChip: FilterChip, Textarea: Textarea, FileAttach: FileAttach, ChipGroup: ChipGroup, StepProgress: StepProgress, Disclosure: Disclosure, ContextCard: ContextCard, DescriptionList: DescriptionList, Drawer: Drawer, EdgeTab: EdgeTab, BottomSheet: BottomSheet, icons: Object.keys(ICONS)});
+window.NSL = Object.assign(window.NSL || {}, {Icon: Icon, Logo: Logo, Button: Button, ButtonGroup: ButtonGroup, CatalogButton: CatalogButton, Link: Link, CloseButton: CloseButton, Input: Input, SearchField: SearchField, PredictiveSearch: PredictiveSearch, Select: Select, Checkbox: Checkbox, Radio: Radio, Toggle: Toggle, CheckboxGroup: CheckboxGroup, RadioGroup: RadioGroup, NumberStepper: NumberStepper, Slider: Slider, PriceRange: PriceRange, Tabs: Tabs, Pagination: Pagination, Breadcrumbs: Breadcrumbs, TopNavItem: TopNavItem, TopNav: TopNav, CloudDropdown: CloudDropdown, StatusIndicator: StatusIndicator, Header: Header, SamRegistered: SamRegistered, SamApproved: SamApproved, CatalogMenu: CatalogMenu, MobileHeader: MobileHeader, MobileNav: MobileNav, HeaderCart: HeaderCart, HeaderAccount: HeaderAccount, Footer: Footer, Tag: Tag, ProductBadge: ProductBadge, CountBadge: CountBadge, Avatar: Avatar, StarRating: StarRating, Price: Price, Notification: Notification, Toast: Toast, SpecList: SpecList, Tooltip: Tooltip, Popover: Popover, Skeleton: Skeleton, EmptyState: EmptyState, Accordion: Accordion, Table: Table, ImageFrame: ImageFrame, ProductGallery: ProductGallery, ProductCard: ProductCard, ModelCard: ModelCard, ConfiguratorRow: ConfiguratorRow, CartLineItem: CartLineItem, CartDropdown: CartDropdown, ReviewCard: ReviewCard, ArticleCard: ArticleCard, Modal: Modal, FilterPanel: FilterPanel, SearchSummary: SearchSummary, SectionHeader: SectionHeader, SearchResult: SearchResult, FilterChip: FilterChip, Textarea: Textarea, FileAttach: FileAttach, ChipGroup: ChipGroup, StepProgress: StepProgress, Disclosure: Disclosure, ContextCard: ContextCard, DescriptionList: DescriptionList, Drawer: Drawer, EdgeTab: EdgeTab, BottomSheet: BottomSheet, icons: Object.keys(ICONS)});
 })();

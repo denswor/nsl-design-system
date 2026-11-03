@@ -240,7 +240,7 @@
 
 .nsl-header { background: var(--bg-default); }
 .nsl-header__top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-24); height: 40px; padding: 0 var(--space-24); }
-.nsl-topnav { display: flex; gap: var(--space-12); overflow: visible; min-width: 0; }
+.nsl-topnav { position: relative; display: flex; gap: var(--space-12); overflow: visible; min-width: 0; flex: 1 1 auto; }
 .nsl-topnav__item { display: inline-flex; align-items: center; height: 40px; font: 400 12px/16px var(--font-mono); letter-spacing: -0.01em; text-transform: uppercase; color: var(--nav-text-default); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; box-sizing: border-box; }
 .nsl-topnav__item:hover { border-bottom-color: var(--white-alpha-50); }
 .nsl-topnav__item.is-active { font-weight: 700; color: var(--nav-text-active); border-bottom-color: currentColor; }
@@ -1037,4 +1037,17 @@ span.nsl-tag--filled:hover { background: var(--tc); } span.nsl-tag--subtle:hover
 @media (prefers-reduced-motion: reduce) { .nsl-status__dot { animation: none; box-shadow: 0 0 6px 1px rgba(16, 185, 129, 0.45); } }
 /* SAM registered: full label, "SAM" + hat when space runs out */
 .nsl-sam--compact .nsl-sam__rest { display: none; }
-@media (max-width: 1279px) { .nsl-header .nsl-sam__rest { display: none; } }
+.nsl-header { container: nsl-header / inline-size; }
+@container nsl-header (max-width: 1279px) { .nsl-sam__rest { display: none; } }
+
+/* Top nav overflow: items that don't fit go under "…" */
+.nsl-topnav__measure { position: absolute; left: 0; top: 0; display: flex; gap: var(--space-12); visibility: hidden; pointer-events: none; white-space: nowrap; height: 0; overflow: hidden; }
+.nsl-topnav__measure .nsl-topnav__item { flex: none; }
+.nsl-topnav__more { display: inline-flex; align-items: center; height: 16px; padding: 0 2px; }
+.nsl-topnav__overflow { list-style: none; margin: 0; padding: var(--space-8); min-width: 200px; background: var(--bg-default); border: 1px solid var(--input-border-default); border-radius: var(--radius-md); box-shadow: var(--shadow-md); display: flex; flex-direction: column; gap: 2px; box-sizing: border-box; }
+.nsl-topnav__overflow a { display: block; padding: 8px 12px; border-radius: var(--radius-sm); font: 400 12px/16px var(--font-mono); text-transform: uppercase; letter-spacing: -0.01em; color: var(--text-primary); text-decoration: none; white-space: nowrap; }
+.nsl-topnav__overflow a:hover { background: var(--bg-subtle); color: var(--brand-default); }
+.nsl-topnav__overflow a.is-active { font-weight: 700; color: var(--brand-default); }
+/* Search suggestions: not tied to the input width */
+.nsl-header__suggest { right: auto; width: max(100%, 640px); max-width: min(760px, calc(100vw - 32px)); }
+.nsl-header__suggest .nsl-psearch { max-width: none; width: 100%; box-sizing: border-box; }
