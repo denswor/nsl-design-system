@@ -1,4 +1,4 @@
-<!-- @dsCard group="Forms" height=196 -->
+<!-- @dsCard group="Forms" height=530 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>CheckboxGroup</title>
@@ -66,7 +66,7 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
-ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'g'}, V('default', h(N.CheckboxGroup,{label:'Brand',size:'sm',options:['DELL','Supermicro','HP'],defaultValue:['DELL']})), V('error', h(N.CheckboxGroup,{label:'RAM',size:'sm',options:['DDR3','DDR4','DDR5'],error:'Pick at least one memory type.'})), V('disabled', h(N.CheckboxGroup,{label:'Type',size:'sm',options:['Tower','Rackmount'],disabled:true}))));
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',null,V(h('b',null,'Playground'), h(Playground,{name:'CheckboxGroup',component:N.CheckboxGroup,base:{label:'Brand',options:['DELL','Supermicro','HP','Lenovo'],defaultValue:['DELL']},controls:[{prop:'size',type:'enum',value:'md',options:['md','sm']},{prop:'direction',type:'enum',value:'column',options:['column','row']},{prop:'disabled',type:'bool',value:false}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('size="md"', h(N.CheckboxGroup,{label:'Brand',options:['DELL','Supermicro','HP'],defaultValue:['DELL']})), V('size="sm" · filter panels', h(N.CheckboxGroup,{label:'Brand',size:'sm',options:['DELL','Supermicro','HP'],defaultValue:['DELL']})), V('error', h(N.CheckboxGroup,{label:'RAM',size:'sm',options:['DDR3','DDR4','DDR5'],error:'Pick at least one memory type.'})), V('disabled', h(N.CheckboxGroup,{label:'Type',size:'sm',options:['Tower','Rackmount'],disabled:true}))))));
 </script>
 </body>
 </html>

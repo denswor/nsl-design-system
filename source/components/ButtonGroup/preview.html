@@ -1,4 +1,4 @@
-<!-- @dsCard group="Actions" height=372 -->
+<!-- @dsCard group="Actions" height=380 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>ButtonGroup</title>
@@ -66,7 +66,7 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
-ReactDOM.createRoot(document.getElementById('root')).render(h('div',null, V(h('b',null,'Playground'), h(Playground,{name:'ButtonGroup',component:N.ButtonGroup,base:{items:[{label:'Grid',icon:'grid'},{label:'List',icon:'list'}]},controls:[{prop:'size',type:'enum',value:'lg',options:['lg','md','sm']}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('size="lg" · with icons', h(N.ButtonGroup,{items:[{label:'Grid',icon:'grid'},{label:'List',icon:'list'}]})), V('size="md"', h(N.ButtonGroup,{size:'md',items:[{label:'Monthly'},{label:'Yearly'}]})), V('size="sm"', h(N.ButtonGroup,{size:'sm',items:['1U','2U','4U','Tower'].map(function(l){return {label:l}}),defaultValue:'2U'}))))));
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',null,V(h('b',null,'Playground'), h(Playground,{name:'ButtonGroup',component:N.ButtonGroup,base:{items:[{label:'Grid',icon:'grid'},{label:'List',icon:'list'}]},controls:[{prop:'size',type:'enum',value:'lg',options:['lg','md','sm']},{prop:'icons',type:'enum',value:true,options:[{value:true,label:'on'},{value:false,label:'off'}]}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('size="lg" · with icons', h(N.ButtonGroup,{items:[{label:'Grid',icon:'grid'},{label:'List',icon:'list'}]})), V('icons={false}', h(N.ButtonGroup,{icons:false,items:[{label:'Grid',icon:'grid'},{label:'List',icon:'list'}]})), V('size="md"', h(N.ButtonGroup,{size:'md',items:[{label:'Monthly'},{label:'Yearly'}]})), V('size="sm"', h(N.ButtonGroup,{size:'sm',items:['1U','2U','4U','Tower'].map(function(l){return {label:l}}),defaultValue:'2U'}))))));
 </script>
 </body>
 </html>

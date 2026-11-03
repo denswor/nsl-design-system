@@ -1,8 +1,8 @@
-<!-- @dsCard group="Layout" height=176 width=1440 -->
+<!-- @dsCard group="Layout" height=3520 width=1440 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>Header</title>
-<style>body{margin:0;padding:16px;background:var(--bg-default);color:var(--text-primary);font-family:var(--font-sans)}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}</style>
+<style>body{margin:0;padding:16px;background:var(--bg-default);color:var(--text-primary);font-family:var(--font-sans)}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:32px}.stage{position:relative}</style>
 </head>
 <body>
 <div id="root"></div>
@@ -66,7 +66,15 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
-ReactDOM.createRoot(document.getElementById('root')).render(V('desktop · 1440', h(N.Header,{cartCount:3})));
+var CART=[{title:'Dell PowerEdge R740',meta:'2× Intel Xeon Gold · 128GB RAM',price:4884},{title:'SSD 800GB SATA 2.5" 6Gb/s',meta:'Tray caddy included',price:680},{title:'HDD 4TB SAS 3.5" 12Gb/s',meta:'Tray caddy included',price:340}];
+
+var box=function(hgt,el){return h('div',{className:'stage',style:{height:hgt}},el);};
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'col'},
+ V(h('b',null,'Playground · click Catalog, type in search, click Your Cart'), h(Playground,{name:'Header',component:N.Header,base:{cartCount:3,cartItems:CART,searchSuggestions:PS},wrap:function(e){return h('div',{style:{width:'100%',minHeight:860}},e)},controls:[{prop:'defaultOpen',type:'enum',value:null,options:[{value:null,label:'none'},'catalog','search','cart']},{prop:'defaultQuery',type:'text',value:'R740'},{prop:'sam',type:'bool',value:true}]})),
+ V(h('span',null,h('b',null,'defaultOpen="search"'),' · PredictiveSearch under the field'), box(740, h(N.Header,{cartCount:3,defaultOpen:'search',defaultQuery:'R740',searchSuggestions:PS}))),
+ V(h('span',null,h('b',null,'defaultOpen="cart"'),' · CartDropdown under Your Cart'), box(520, h(N.Header,{cartCount:3,defaultOpen:'cart',cartItems:CART}))),
+ V(h('span',null,h('b',null,'defaultOpen="catalog"'),' · CatalogMenu'), box(1000, h(N.Header,{cartCount:3,defaultOpen:'catalog'})))));
+
 </script>
 </body>
 </html>

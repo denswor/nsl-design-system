@@ -1,8 +1,8 @@
-<!-- @dsCard group="Navigation" height=104 -->
+<!-- @dsCard group="Navigation" height=390 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>TopNavItem</title>
-<style>body{margin:0;padding:16px;background:var(--bg-default);color:var(--text-primary);font-family:var(--font-sans)}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.bar{display:flex;gap:12px;padding:0 16px}</style>
+<style>body{margin:0;padding:16px;background:var(--bg-default);color:var(--text-primary);font-family:var(--font-sans)}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.bar{display:flex;gap:12px;padding:0 16px}.col{display:flex;flex-direction:column;gap:20px}</style>
 </head>
 <body>
 <div id="root"></div>
@@ -66,7 +66,10 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
-ReactDOM.createRoot(document.getElementById('root')).render(V('default · active', h('div',{className:'nsl-gradient nsl-on-dark bar'}, ['Hardware','Cloud','Colocation'].map(function(n,i){return h(N.TopNavItem,{key:n,active:i===0},n)}))));
+var NAV=['Hardware','Cloud','Colocation','Solutions'];
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'col'},
+ V('default · active · hover Cloud to open its menu', h('div',{className:'nsl-gradient nsl-on-dark bar'}, NAV.map(function(n,i){return h(N.TopNavItem,{key:n,active:i===0,menu:n==='Cloud'?h(N.CloudDropdown):undefined},n)}))),
+ V('Cloud · open={true} (pinned for the preview)', h('div',{style:{height:240}}, h('div',{className:'nsl-gradient nsl-on-dark bar'}, NAV.map(function(n,i){return h(N.TopNavItem,{key:n,active:i===0,open:n==='Cloud'?true:undefined,menu:n==='Cloud'?h(N.CloudDropdown):undefined},n)}))))));
 </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!-- @dsCard group="Forms" height=346 -->
+<!-- @dsCard group="Forms" height=420 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>Toggle</title>
@@ -66,7 +66,7 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
-ReactDOM.createRoot(document.getElementById('root')).render(h('div',null, V(h('b',null,'Playground'), h(Playground,{name:'Toggle',component:N.Toggle,controls:[{prop:'label',type:'text',value:'Show prices with VAT'},{prop:'checked',type:'bool',value:true},{prop:'disabled',type:'bool',value:false}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('on', h(N.Toggle,{label:'Show prices with VAT',defaultChecked:true})), V('off', h(N.Toggle,{label:'Email me price drops'})), V('disabled', h(N.Toggle,{label:'Disabled',disabled:true}))))));
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',null,V(h('b',null,'Playground'), h(Playground,{name:'Toggle',component:N.Toggle,controls:[{prop:'label',type:'text',value:'Show prices with VAT'},{prop:'size',type:'enum',value:'md',options:['md','sm']},{prop:'checked',type:'bool',value:true},{prop:'disabled',type:'bool',value:false}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('size="md" · on', h(N.Toggle,{label:'Show prices with VAT',defaultChecked:true})), V('size="sm" · on', h(N.Toggle,{size:'sm',label:'Show prices with VAT',defaultChecked:true})), V('off', h(N.Toggle,{label:'Email me price drops'})), V('size="sm" · off', h(N.Toggle,{size:'sm',label:'In stock only'})), V('disabled', h(N.Toggle,{label:'Disabled',disabled:true}))))));
 </script>
 </body>
 </html>

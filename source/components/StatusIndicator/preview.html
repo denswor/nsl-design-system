@@ -1,4 +1,4 @@
-<!-- @dsCard group="Navigation" height=104 -->
+<!-- @dsCard group="Navigation" height=130 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>StatusIndicator</title>
@@ -66,7 +66,10 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
-ReactDOM.createRoot(document.getElementById('root')).render(V('online · offline', h('div',{className:'nsl-gradient nsl-on-dark g pad'}, h(N.StatusIndicator,{}), h(N.StatusIndicator,{online:false}))));
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'g'},
+ V('online · glow + glint', h('div',{className:'nsl-gradient nsl-on-dark pad'}, h(N.StatusIndicator,{}))),
+ V('static', h('div',{className:'nsl-gradient nsl-on-dark pad'}, h(N.StatusIndicator,{static:true}))),
+ V(h('span',null,h('b',null,'online={false}'),' · renders nothing'), h('div',{className:'nsl-gradient nsl-on-dark pad',style:{minWidth:160,minHeight:40}}, h(N.StatusIndicator,{online:false})))));
 </script>
 </body>
 </html>
