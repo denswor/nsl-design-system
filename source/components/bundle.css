@@ -477,8 +477,9 @@ span.nsl-tag--filled:hover { background: var(--tc); } span.nsl-tag--subtle:hover
 .nsl-specs .nsl-icon { margin-top: 2px; }
 .nsl-specs--text li { gap: var(--space-12); }
 .nsl-specs__key { flex: none; width: 48px; text-align: right; font: 300 12px/20px var(--font-mono); color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.nsl-specs--labels li { gap: var(--space-8); }
-.nsl-specs__label { flex: none; min-width: 52px; text-align: right; font: 700 14px/20px var(--font-mono); white-space: nowrap; }
+.nsl-specs--labels { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: var(--space-8); }
+.nsl-specs--labels li { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; gap: inherit; align-items: start; }
+.nsl-specs__label { min-width: 52px; text-align: right; font: 700 14px/20px var(--font-mono); white-space: nowrap; }
 .nsl-specs--labels span { color: var(--text-secondary); }
 
 .nsl-tip { position: relative; display: inline-flex; }
@@ -504,6 +505,8 @@ span.nsl-tag--filled:hover { background: var(--tc); } span.nsl-tag--subtle:hover
 /* tooltip */
 .nsl-tip__bubble { width: max-content; max-width: 260px; padding: var(--space-8) var(--space-12); border-radius: var(--radius-md); background: var(--fl-bg); color: var(--neutral-white); font: 400 12px/16px var(--font-sans); text-align: left; box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden; transition: opacity .12s, visibility .12s; pointer-events: none; }
 .nsl-tip__bubble.is-open { opacity: 1; visibility: visible; }
+/* Floating text must wrap even when the trigger sits in a nowrap row (ConfiguratorRow price side, tables, buttons). */
+.nsl-tip__bubble, .nsl-pop__panel { white-space: normal; overflow-wrap: break-word; text-transform: none; letter-spacing: normal; }
 .nsl-tip__title { display: block; font-weight: 600; margin-bottom: 2px; }
 .nsl-tip__bubble--light { --fl-bg: var(--bg-default); color: var(--text-primary); border: 1px solid var(--border-default); }
 .nsl-tip__bubble--light::before { content: ""; position: absolute; width: 0; height: 0; border: 7px solid transparent; }
@@ -587,7 +590,7 @@ span.nsl-tag--filled:hover { background: var(--tc); } span.nsl-tag--subtle:hover
 
 .nsl-mcard { container-type: inline-size; padding: var(--space-24); background: var(--bg-default); border-radius: var(--radius-xs); box-shadow: var(--shadow-md); border-bottom: 2px solid var(--border-brand); }
 .nsl-mcard__in { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr) 192px; gap: var(--space-24) 32px; }
-.nsl-mcard__media { display: flex; flex-direction: column; gap: var(--space-12); }
+.nsl-mcard__media { display: flex; flex-direction: column; gap: var(--space-12); grid-row: 1 / span 2; }
 .nsl-mcard__media .nsl-img { color: var(--icon-default); }
 .nsl-mcard__body { display: flex; flex-direction: column; gap: var(--space-12); min-width: 0; }
 .nsl-mcard__title { margin: 0; font: 600 20px/24px var(--font-mono); letter-spacing: -0.01em; color: var(--text-primary); }
@@ -600,8 +603,8 @@ span.nsl-tag--filled:hover { background: var(--tc); } span.nsl-tag--subtle:hover
 .nsl-mcard--mobile .nsl-mcard__in { grid-template-columns: 1fr; }
 .nsl-mcard__toggle { display: inline-flex; align-items: center; gap: var(--space-8); padding: var(--space-8) 0; border: 0; background: transparent; font: 700 14px/20px var(--font-mono); color: var(--text-secondary); cursor: pointer; }
 .nsl-mcard__expand { display: flex; flex-direction: column; gap: var(--space-8); }
-@container (max-width: 720px) { .nsl-mcard__in { grid-template-columns: minmax(0, 240px) minmax(0, 1fr); } .nsl-mcard__buy { grid-column: 2; } }
-@container (max-width: 480px) { .nsl-mcard__in { grid-template-columns: 1fr; } .nsl-mcard__buy { grid-column: auto; } }
+@container (max-width: 720px) { .nsl-mcard__in { grid-template-columns: minmax(0, 240px) minmax(0, 1fr); } .nsl-mcard__media { grid-row: 1 / span 3; } .nsl-mcard__buy { grid-column: 2; } }
+@container (max-width: 480px) { .nsl-mcard__in { grid-template-columns: 1fr; } .nsl-mcard__media { grid-row: auto; } .nsl-mcard__buy { grid-column: auto; } }
 
 .nsl-crow { display: flex; align-items: center; justify-content: space-between; gap: var(--space-12); min-height: 40px; padding: var(--space-8) var(--space-12); border-radius: var(--radius-sm); border-bottom: 1px solid var(--border-default); color: var(--text-primary); font: 400 12px/16px var(--font-sans); }
 .nsl-crow__main { display: flex; align-items: center; gap: var(--space-8); min-width: 0; }
@@ -1109,3 +1112,27 @@ a.nsl-navhead:focus-visible { outline: none; box-shadow: var(--shadow-focus); bo
 .nsl-navlink:hover .nsl-navlink__price b, .nsl-navlink:hover .nsl-navlink__from, .nsl-catmenu__bitem:hover .nsl-navlink__price b { color: var(--secondary-default); }
 .nsl-mtag.nsl-mtag--sale { border-color: var(--status-error) !important; color: var(--status-error); font-weight: 600; }
 .nsl-mtag.nsl-mtag--discount { border-color: var(--brand-default) !important; background: var(--brand-subtle); color: var(--brand-default); font-weight: 600; }
+
+/* ---------- ModelCard v2: right-aligned price, full-width Suitable for, mini gallery ---------- */
+.nsl-mcard__suit { grid-column: 2 / -1; margin-top: 0; }
+.nsl-mcard__buy { align-items: stretch; }
+.nsl-mcard__price { display: flex; flex-direction: column; align-items: flex-end; text-align: right; color: var(--secondary-500); }
+.nsl-mcard__now { display: flex; align-items: baseline; justify-content: flex-end; flex-wrap: wrap; gap: 0 var(--space-8); }
+.nsl-mcard__prefix { font: 400 18px/24px var(--font-sans); }
+.nsl-mcard__value { font: 700 28px/32px var(--font-mono); letter-spacing: -0.02em; white-space: nowrap; }
+.nsl-mcard__old { font: 400 16px/20px var(--font-mono); letter-spacing: -0.02em; color: var(--neutral-400); text-decoration-thickness: 1px; }
+.nsl-mcard--mobile .nsl-mcard__price { align-items: flex-start; text-align: left; }
+.nsl-mcard--mobile .nsl-mcard__now { justify-content: flex-start; }
+@container (max-width: 720px) { .nsl-mcard__suit { grid-column: 2; } }
+@container (max-width: 480px) { .nsl-mcard__suit { grid-column: auto; } .nsl-mcard__price { align-items: flex-start; text-align: left; } .nsl-mcard__now { justify-content: flex-start; } }
+.nsl-mgal { position: relative; }
+.nsl-mgal .nsl-img { color: var(--icon-default); }
+.nsl-mgal__nav { position: absolute; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; border: 1px solid var(--border-default); border-radius: var(--radius-full); background: var(--bg-default); color: var(--text-primary); box-shadow: var(--shadow-sm); cursor: pointer; opacity: 0; transition: opacity .15s, color .12s; }
+.nsl-mgal__nav--prev { left: 8px; } .nsl-mgal__nav--next { right: 8px; }
+.nsl-mgal__nav:hover { color: var(--brand-default); }
+.nsl-mgal__nav:focus-visible, .nsl-mgal__dot:focus-visible { outline: none; box-shadow: var(--shadow-focus); opacity: 1; }
+.nsl-mgal__dots { position: absolute; left: 0; right: 0; bottom: 8px; display: flex; justify-content: center; gap: 6px; opacity: 0; transition: opacity .15s; }
+.nsl-mgal__dot { width: 6px; height: 6px; padding: 0; border: 0; border-radius: var(--radius-full); background: var(--neutral-300); cursor: pointer; transition: width .15s, background .15s; }
+.nsl-mgal__dot.is-active { width: 16px; background: var(--brand-default); }
+.nsl-mcard:hover .nsl-mgal__nav, .nsl-mcard:hover .nsl-mgal__dots, .nsl-mgal:hover .nsl-mgal__nav, .nsl-mgal:hover .nsl-mgal__dots, .nsl-mgal:focus-within .nsl-mgal__nav, .nsl-mgal:focus-within .nsl-mgal__dots, .nsl-mgal.is-shown .nsl-mgal__nav, .nsl-mgal.is-shown .nsl-mgal__dots { opacity: 1; }
+@media (hover: none) { .nsl-mgal__dots { opacity: 1; } }

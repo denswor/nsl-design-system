@@ -1,6 +1,6 @@
 {
   "name": "nsl-design-system",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "description": "NSL Design System: components, tokens and usage docs for NewServerLife",
   "type": "module",

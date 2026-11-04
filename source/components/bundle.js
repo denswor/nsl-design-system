@@ -721,23 +721,41 @@ function ProductCard(p) {
     h('div', { className: 'nsl-pcard__foot' }, h(Price, { prefix: p.pricePrefix === undefined ? 'from' : p.pricePrefix, value: p.price, oldValue: p.oldPrice }),
       h(Button, { variant: p.ctaVariant || 'primary-subtle', size: p.compact ? 'md' : 'lg', iconLeft: p.ctaIcon || preset.icon, fullWidth: true, onClick: p.onAction || p.onAdd }, p.cta || preset.label)));
 }
+function MiniGallery(p) {
+  var imgs = p.images && p.images.length ? p.images : [p.image || null]; var n = imgs.length; var s = useState(0); var i = Math.min(s[0], n - 1);
+  var ic = function (k) { return n > 1 ? GALLERY_ICONS[k % GALLERY_ICONS.length] : (p.placeholderIcon || 'hard-drive'); };
+  function go(d, e) { if (e) { e.preventDefault(); e.stopPropagation(); } s[1]((i + d + n) % n); }
+  return h('div', { className: cx('nsl-mgal', n > 1 && 'nsl-mgal--multi', p.className) },
+    h(ImageFrame, { ratio: p.ratio || '16:9', src: imgs[i], placeholderIcon: ic(i), alt: p.alt }),
+    n > 1 && h(Fragment, null,
+      h('button', { type: 'button', className: 'nsl-mgal__nav nsl-mgal__nav--prev', 'aria-label': 'Previous image', onClick: function (e) { go(-1, e); } }, h(Icon, { name: 'chevron-left', size: 16 })),
+      h('button', { type: 'button', className: 'nsl-mgal__nav nsl-mgal__nav--next', 'aria-label': 'Next image', onClick: function (e) { go(1, e); } }, h(Icon, { name: 'chevron-right', size: 16 })),
+      h('div', { className: 'nsl-mgal__dots', role: 'tablist', 'aria-label': 'Images' }, imgs.map(function (x, k) {
+        return h('button', { key: k, type: 'button', role: 'tab', 'aria-selected': k === i, 'aria-label': 'Image ' + (k + 1) + ' of ' + n, className: cx('nsl-mgal__dot', k === i && 'is-active'), onClick: function (e) { e.preventDefault(); s[1](k); } });
+      }))));
+}
 function ModelCard(p) {
   var avail = p.available !== false; var ex = useState(!!p.expanded);
   var tags = p.suitableFor || [];
+  var prefix = p.pricePrefix === undefined || p.pricePrefix === false ? '' : p.pricePrefix;
+  var price = avail && p.price !== undefined && p.price !== null && h('div', { className: 'nsl-mcard__price' },
+    h('div', { className: 'nsl-mcard__now' }, prefix && h('span', { className: 'nsl-mcard__prefix' }, prefix), h('span', { className: 'nsl-mcard__value' }, money(p.price))),
+    p.oldPrice && h('s', { className: 'nsl-mcard__old' }, money(p.oldPrice)));
+  var suit = tags.length > 0 && h('div', { className: 'nsl-mcard__suit' }, h('div', { className: 'nsl-mcard__sub' }, p.suitableTitle || 'Suitable for'), h('div', { className: 'nsl-mcard__tags' }, tags.map(function (t) { return h(Tag, { key: t, size: 'sm', color: 'neutral' }, t); })));
   return h('article', { className: cx('nsl-mcard', p.mobile && 'nsl-mcard--mobile', p.className) }, h('div', { className: 'nsl-mcard__in' },
     h('div', { className: 'nsl-mcard__media' }, h('div', { className: 'nsl-pcard__badgeset' }, (avail ? (p.badges || ['in-stock']) : ['on-request']).map(function (b) { return h(ProductBadge, { key: b, type: b }); })),
-      h(ImageFrame, { ratio: '16:9', src: p.image, placeholderIcon: 'hard-drive' })),
+      h(MiniGallery, { images: p.images, image: p.image, alt: typeof p.title === 'string' ? p.title : '' })),
     h('div', { className: 'nsl-mcard__body' },
       h('h3', { className: 'nsl-mcard__title' }, p.title),
       h('div', { className: 'nsl-mcard__sub' }, p.specsTitle || 'Cage specifications'),
-      h(SpecList, { variant: 'labels', items: p.specs }),
-      !p.mobile && tags.length > 0 && h('div', { className: 'nsl-mcard__suit' }, h('div', { className: 'nsl-mcard__sub' }, 'Suitable for'), h('div', { className: 'nsl-mcard__tags' }, tags.map(function (t) { return h(Tag, { key: t, size: 'sm', color: 'neutral' }, t); })))),
+      h(SpecList, { variant: 'labels', items: p.specs })),
     h('div', { className: 'nsl-mcard__buy' },
-      avail && h(Price, { prefix: 'starting at', value: p.price, oldValue: p.oldPrice, size: 'lg', stacked: true, className: p.mobile ? '' : 'nsl-price--stack' }),
+      price,
       avail ? h(Button, { variant: 'primary', iconLeft: 'settings', fullWidth: true, size: 'md', onClick: p.onConfigure }, 'Configure') : h(Button, { variant: 'ghost', iconLeft: 'mail', fullWidth: true, size: 'md', onClick: p.onQuote }, 'Request for Quote'),
       p.mobile && tags.length > 0 && h('div', { className: 'nsl-mcard__expand' },
-        h('button', { type: 'button', className: 'nsl-mcard__toggle', 'aria-expanded': ex[0], onClick: function () { ex[1](!ex[0]); } }, h(Icon, { name: ex[0] ? 'chevron-up' : 'chevron-down', size: 16 }), 'Suitable for ', h(CountBadge, { count: tags.length, shape: 'pill' })),
-        ex[0] && h('div', { className: 'nsl-mcard__tags' }, tags.map(function (t) { return h(Tag, { key: t, size: 'sm', color: 'neutral' }, t); }))))));
+        h('button', { type: 'button', className: 'nsl-mcard__toggle', 'aria-expanded': ex[0], onClick: function () { ex[1](!ex[0]); } }, h(Icon, { name: ex[0] ? 'chevron-up' : 'chevron-down', size: 16 }), p.suitableTitle || 'Suitable for', ' ', h(CountBadge, { count: tags.length, shape: 'pill' })),
+        ex[0] && h('div', { className: 'nsl-mcard__tags' }, tags.map(function (t) { return h(Tag, { key: t, size: 'sm', color: 'neutral' }, t); })))),
+    !p.mobile && suit));
 }
 function ConfiguratorRow(p) {
   var c = useCtl(p.selected, !!p.defaultSelected, p.onSelect); var qty = useCtl(p.quantity, p.defaultQuantity || 1, p.onQuantityChange);
