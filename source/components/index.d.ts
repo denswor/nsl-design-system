@@ -104,4 +104,6 @@ export declare const SearchSummary: C<SearchSummaryProps>; export declare const 
 export declare const Textarea: C<TextareaProps>; export declare const FileAttach: C<FileAttachProps>; export declare const ChipGroup: C<ChipGroupProps>; export declare const StepProgress: C<StepProgressProps>;
 export declare const Disclosure: C<DisclosureProps>; export declare const ContextCard: C<ContextCardProps>; export declare const DescriptionList: C<DescriptionListProps>;
 export declare const Drawer: C<DrawerProps>; export declare const EdgeTab: C<EdgeTabProps>; export declare const BottomSheet: C<BottomSheetProps>;
+export interface LayoutGridProps { /** false renders nothing (wire it to a toggle). Default true. */ visible?: boolean; /** auto picks 12 / 8 / 4 columns from the grid's own width; the others force one. */ breakpoint?: 'auto' | 'desktop' | 'tablet' | 'mobile'; /** Pin to the viewport instead of the nearest positioned parent. */ fixed?: boolean; /** Column fill, overrides layout-grid-fill. */ color?: string; /** Column edge, overrides layout-grid-line. */ lineColor?: string; className?: string; style?: React.CSSProperties }
+export declare const LayoutGrid: C<LayoutGridProps>;
 declare global { interface Window { NSL: typeof import('./index') & { icons: string[] } } }

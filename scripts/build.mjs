@@ -153,7 +153,8 @@ function exampleDoc(c) {
 <script src="../dist/vendor/react.production.min.js"></script><script src="../dist/vendor/react-dom.production.min.js"></script><script src="../dist/bundle.js"></script>`;
   const resize = `<script>(function(){function post(){try{parent.postMessage({nslFrame:${JSON.stringify(c.name)},h:Math.ceil(document.documentElement.scrollHeight)},'*')}catch(e){}}
 new ResizeObserver(post).observe(document.documentElement);addEventListener('load',post);setInterval(post,1000);
-addEventListener('message',function(e){if(e.data&&e.data.nslTheme)document.documentElement.setAttribute('data-theme',e.data.nslTheme)});})();</script>`;
+addEventListener('message',function(e){if(e.data&&e.data.nslTheme)document.documentElement.setAttribute('data-theme',e.data.nslTheme);
+if(e.data&&'nslGrid' in e.data){var g=document.getElementById('nsl-docs-grid');if(e.data.nslGrid&&!g){g=document.createElement('div');g.id='nsl-docs-grid';g.className='nsl-lgrid nsl-lgrid--fixed';g.setAttribute('aria-hidden','true');g.innerHTML='<div class="nsl-lgrid__cols">'+new Array(13).join('<i></i>')+'</div>';document.body.appendChild(g)}else if(!e.data.nslGrid&&g)g.remove()}});})();</script>`;
   let html = c.preview.replace(/^<!--\s*@dsCard[^>]*-->\s*/, '');
   html = html.replace(/<script src="\.\.\/\.\.\/docs\/playground\.js"><\/script>/g, '');
   if (/<!doctype/i.test(html)) {
@@ -234,7 +235,7 @@ for (const c of comps) {
 <h1>${esc(c.name)}</h1>
 ${c.lead ? `<p class="lead">${marked.parseInline(c.lead)}</p>` : ''}
 <section class="ex" aria-label="Examples">
-  <div class="ex__bar"><span class="ex__title">Examples</span><div class="seg seg--sm" role="radiogroup" aria-label="Preview width"><button type="button" role="radio" data-w="" aria-checked="true">Fluid</button><button type="button" role="radio" data-w="768">768</button><button type="button" role="radio" data-w="375">375</button></div><a class="ex__open" href="../examples/${c.name}.html" target="_blank" rel="noopener">Open in new tab ↗</a></div>
+  <div class="ex__bar"><span class="ex__title">Examples</span><div class="seg seg--sm" role="radiogroup" aria-label="Preview width"><button type="button" role="radio" data-w="" aria-checked="true">Fluid</button><button type="button" role="radio" data-w="768">768</button><button type="button" role="radio" data-w="375">375</button></div><button type="button" class="ex__grid" data-grid aria-pressed="false" title="Show the layout grid (G)">Grid</button><a class="ex__open" href="../examples/${c.name}.html" target="_blank" rel="noopener">Open in new tab ↗</a></div>
   <div class="ex__stage"><iframe class="ex__frame" title="${esc(c.name)} examples" src="../examples/${c.name}.html" loading="lazy" data-frame="${esc(c.name)}"></iframe></div>
 </section>
 ${c.rest ? `<section><h2 id="guidelines">Guidelines</h2><div class="md">${md(c.rest)}</div></section>` : ''}

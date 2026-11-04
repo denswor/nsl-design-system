@@ -51,7 +51,17 @@ NewServerLife sells refurbished and new server hardware: servers, chassis, stora
 
 ## Layout
 
-- 12-column grid, 30px gutter: `container-wide` 1530 at 1680, `container-desktop` 1170 at 1440, `container-tablet` 954 at 1024. Mobile: 4 columns, 16px gutter and margins.
+| Width | Columns | Gutter | Side margin | Container |
+| --- | --- | --- | --- | --- |
+| 1680 and wider | 12 | `gutter` 30 | `grid-margin-wide` 75 | `container-wide` 1530 |
+| 1024–1679 | 12 | `gutter` 30 | at least `grid-margin-desktop` 35 | up to `container-desktop` 1170 (954 at 1024) |
+| 720–1023 | 8 | `gutter-tablet` 24 | `grid-margin-tablet` 32 | fluid |
+| below 720 | 4 | `gutter-mobile` 16 | `grid-margin-mobile` 16 | fluid |
+
+- The breakpoints are `breakpoint-tablet` 720, `breakpoint-desktop` 1024 and `breakpoint-wide` 1680. 720 is the same edge the components use for their mobile step.
+- Pages sit in `.nsl-container`, which applies the container and margins above. Blocks align to columns: a two-column hero is 6 + 6 on desktop and 5 + 3 on tablet; a row of cards takes 3 or 4 columns each.
+- `LayoutGrid` overlays the grid on a page or a preview to check alignment. It picks 12 / 8 / 4 columns from its own width. Show it from a toggle; it never ships in production UI.
+- The Figma file has the same grid as variables (`grid/columns`, `grid/gutter`, `grid/margin`, modes Desktop / Tablet / Mobile) and three layout grid styles.
 - Header is 112px (40px gradient top bar + 72px row). The page body starts on `bg-default`.
 
 ## Iconography

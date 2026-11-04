@@ -54,9 +54,18 @@
     if (!e.data || !e.data.nslFrame) return;
     document.querySelectorAll('iframe[data-frame]').forEach(function (f) { if (f.contentWindow === e.source) { var h = Math.max(120, e.data.h); if (Math.abs(f.offsetHeight - h) > 2) f.style.height = h + 'px'; } });
   });
+  /* layout grid overlay in example frames: Grid button or the G key, remembered per browser */
+  var gridOn = false; try { gridOn = localStorage.getItem('nsl-docs-grid') === 'on'; } catch (e) {}
+  function setGrid(on) {
+    gridOn = on; try { localStorage.setItem('nsl-docs-grid', on ? 'on' : 'off'); } catch (e) {}
+    document.querySelectorAll('[data-grid]').forEach(function (b) { b.setAttribute('aria-pressed', String(on)); });
+    document.querySelectorAll('iframe[data-frame]').forEach(function (f) { try { f.contentWindow.postMessage({ nslGrid: on }, '*'); } catch (e) {} });
+  }
+  document.querySelectorAll('[data-grid]').forEach(function (b) { b.setAttribute('aria-pressed', String(gridOn)); b.addEventListener('click', function () { setGrid(!gridOn); }); });
+  document.addEventListener('keydown', function (e) { if ((e.key === 'g' || e.key === 'G') && !e.metaKey && !e.ctrlKey && !e.altKey && !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || '')) && document.querySelector('[data-grid]')) setGrid(!gridOn); });
   document.querySelectorAll('.ex').forEach(function (ex) {
     var f = ex.querySelector('iframe');
-    f.addEventListener('load', function () { try { f.contentWindow.postMessage({ nslTheme: root.getAttribute('data-theme') }, '*'); } catch (e) {} });
+    f.addEventListener('load', function () { try { f.contentWindow.postMessage({ nslTheme: root.getAttribute('data-theme'), nslGrid: gridOn }, '*'); } catch (e) {} });
     ex.querySelectorAll('[data-w]').forEach(function (b) {
       b.addEventListener('click', function () {
         var w = b.getAttribute('data-w');

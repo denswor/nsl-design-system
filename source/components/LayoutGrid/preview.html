@@ -1,0 +1,17 @@
+<!-- @dsCard group="Layout" height=460 subtitle="12 / 8 / 4 columns" -->
+<style>.lg{display:flex;flex-direction:column;gap:16px}.lg__frame{position:relative;height:120px;background:var(--bg-subtle);border:1px solid var(--border-default);border-radius:4px;overflow:hidden}.lg__l{font:400 11px/16px var(--font-mono);color:var(--text-secondary);margin-bottom:6px}.lg__row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}.lg__row>div{min-width:0}.lg__bar{display:flex;align-items:center;gap:10px;font:400 11px/16px var(--font-mono);color:var(--text-secondary)}</style>
+<div id="root"></div>
+<script>
+var N = window.NSL, h = React.createElement;
+function Demo() {
+  var s = React.useState(true), on = s[0];
+  function frame(label, w) {
+    return h('div', { style: { width: w, flex: 'none', maxWidth: '100%' } }, h('div', { className: 'lg__l' }, label), h('div', { className: 'lg__frame' }, h(N.LayoutGrid, { visible: on })));
+  }
+  return h('div', { className: 'lg' },
+    h('div', { className: 'lg__bar' }, h(N.Toggle, { checked: on, onChange: function (v) { s[1](!!v); } }), 'visible'),
+    h('div', null, h('div', { className: 'lg__l' }, 'auto: this frame’s width picks the grid (12 columns at 1024+)'), h('div', { className: 'lg__frame' }, h(N.LayoutGrid, { visible: on }))),
+    h('div', { className: 'lg__row' }, frame('768 → 8 columns', 768), frame('375 → 4 columns', 375)));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
