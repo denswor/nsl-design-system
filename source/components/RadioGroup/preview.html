@@ -1,4 +1,4 @@
-<!-- @dsCard group="Forms" height=500 -->
+<!-- @dsCard group="Forms" height=600 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>RadioGroup</title>
@@ -66,7 +66,7 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
-ReactDOM.createRoot(document.getElementById('root')).render(h('div',null,V(h('b',null,'Playground'), h(Playground,{name:'RadioGroup',component:N.RadioGroup,base:{label:'Warranty',options:['1 year','3 years','5 years NBD'],defaultValue:'3 years'},controls:[{prop:'size',type:'enum',value:'md',options:['md','sm']},{prop:'direction',type:'enum',value:'column',options:['column','row']},{prop:'disabled',type:'bool',value:false}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('size="md"', h(N.RadioGroup,{label:'Warranty',options:['1 year','3 years','5 years NBD'],defaultValue:'3 years'})), V('size="sm"', h(N.RadioGroup,{label:'Warranty',size:'sm',options:['1 year','3 years','5 years NBD'],defaultValue:'3 years'})), V('size="sm" · error', h(N.RadioGroup,{label:'Delivery',size:'sm',options:['Ground','2-day air'],error:'Choose a delivery option.'}))))));
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',null,V(h('b',null,'Playground'), h(Playground,{name:'RadioGroup',component:N.RadioGroup,wrap:function(e){return h('div',{style:{width:380}},e)},base:{label:'Warranty',defaultValue:'3 years'},controls:[{prop:'options',label:'aside',type:'bool',value:false,map:function(v){return v?[{value:'1 year',label:'1 year',aside:'$ 0'},{value:'3 years',label:'3 years',aside:'$ 90'},{value:'5 years NBD',label:'5 years NBD',aside:'$ 240'}]:['1 year','3 years','5 years NBD']}},{prop:'size',type:'enum',value:'md',options:['md','sm']},{prop:'direction',type:'enum',value:'column',options:['column','row']},{prop:'disabled',type:'bool',value:false}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('size="md"', h(N.RadioGroup,{label:'Warranty',options:['1 year','3 years','5 years NBD'],defaultValue:'3 years'})), V('size="sm"', h(N.RadioGroup,{label:'Warranty',size:'sm',options:['1 year','3 years','5 years NBD'],defaultValue:'3 years'})), V('size="sm" · error', h(N.RadioGroup,{label:'Delivery',size:'sm',options:['Ground','2-day air'],error:'Choose a delivery option.'})), V('options with aside · price on the right', h('div',{style:{width:380}}, h(N.RadioGroup,{label:'Colocation',defaultValue:'none',options:[{value:'none',label:'Without colocation',aside:'$ 0'},{value:'mia',label:'Miami | FL | USA',aside:'$ 0'},{value:'mia2',label:'Miami 2 | FL | USA',aside:'$ 0'},{value:'dal',label:'Dallas | TX | USA',aside:'$ 0'},{value:'sf',label:'San-Francisco | CA | USA',aside:'$ 0'},{value:'waw',label:'Warsaw | Poland',aside:'$ 0'}]})))))));
 </script>
 </body>
 </html>

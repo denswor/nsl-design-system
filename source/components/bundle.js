@@ -137,11 +137,13 @@ function Choice(type) {
     var id = useId(p.id), size = p.size || 'md';
     var c = useCtl(p.checked, !!p.defaultChecked, p.onChange);
     var ind = type === 'checkbox' && p.indeterminate;
-    return h('label', { htmlFor: id, className: cx('nsl-check', 'nsl-check--' + type, 'nsl-check--' + size, p.disabled && 'is-disabled', p.error && 'is-error', p.className) },
+    var hasAside = p.aside !== undefined && p.aside !== null && p.aside !== '';
+    return h('label', { htmlFor: id, className: cx('nsl-check', 'nsl-check--' + type, 'nsl-check--' + size, hasAside && 'nsl-check--aside', p.disabled && 'is-disabled', p.error && 'is-error', p.className) },
       h('input', { id: id, type: type, name: p.name, value: p.value, checked: c[0], disabled: p.disabled, 'aria-invalid': p.error || undefined, onChange: function (e) { c[1](e.target.checked); } }),
       h('span', { className: cx('nsl-check__box', (c[0] || ind) && 'is-checked'), 'aria-hidden': true },
         type === 'checkbox' ? ((ind && h(Icon, { name: 'minus', size: 14, strokeWidth: 2 })) || (c[0] && h(Icon, { name: 'check', size: 14, strokeWidth: 2 }))) : h('span', { className: 'nsl-check__dot' })),
-      p.label && h('span', { className: 'nsl-check__label' }, p.label));
+      p.label && h('span', { className: 'nsl-check__label' }, p.label),
+      hasAside && h('span', { className: 'nsl-check__aside' }, p.aside));
   };
 }
 var Checkbox = Choice('checkbox');
@@ -164,7 +166,7 @@ function GroupOf(type) {
       p.label && h('legend', { className: 'nsl-group__legend' }, p.label, p.hint && h('span', { className: 'nsl-group__hint' }, ' ' + p.hint)),
       h('div', { className: cx('nsl-group__items', p.direction === 'row' && 'nsl-group__items--row', p.columns > 1 && 'nsl-group__items--grid'), style: p.columns > 1 ? { gridTemplateColumns: 'repeat(' + p.columns + ', minmax(0, 1fr))' } : undefined }, opts.map(function (x) {
         var on = multi ? c[0].indexOf(x.value) >= 0 : c[0] === x.value;
-        return h(C, { key: x.value, name: name, value: x.value, label: x.label, size: p.size, checked: on, disabled: p.disabled || x.disabled, error: !!p.error,
+        return h(C, { key: x.value, name: name, value: x.value, label: x.label, aside: x.aside, size: p.size, checked: on, disabled: p.disabled || x.disabled, error: !!p.error,
           onChange: function (v) { if (multi) { var a = c[0].filter(function (y) { return y !== x.value; }); if (v) a.push(x.value); c[1](a); } else if (v) c[1](x.value); } });
       })),
       (p.error || p.helper) && h('div', { className: cx('nsl-field__helper', p.error && 'is-error') }, typeof p.error === 'string' ? p.error : p.helper));
@@ -737,7 +739,7 @@ function MiniGallery(p) {
 function ModelCard(p) {
   var avail = p.available !== false; var ex = useState(!!p.expanded);
   var tags = p.suitableFor || [];
-  var prefix = p.pricePrefix === undefined || p.pricePrefix === false ? '' : p.pricePrefix;
+  var prefix = !p.pricePrefix ? '' : p.pricePrefix === true ? 'from' : p.pricePrefix;
   var price = avail && p.price !== undefined && p.price !== null && h('div', { className: 'nsl-mcard__price' },
     h('div', { className: 'nsl-mcard__now' }, prefix && h('span', { className: 'nsl-mcard__prefix' }, prefix), h('span', { className: 'nsl-mcard__value' }, money(p.price))),
     p.oldPrice && h('s', { className: 'nsl-mcard__old' }, money(p.oldPrice)));
@@ -751,7 +753,7 @@ function ModelCard(p) {
       h(SpecList, { variant: 'labels', items: p.specs })),
     h('div', { className: 'nsl-mcard__buy' },
       price,
-      avail ? h(Button, { variant: 'primary', iconLeft: 'settings', fullWidth: true, size: 'md', onClick: p.onConfigure }, 'Configure') : h(Button, { variant: 'ghost', iconLeft: 'mail', fullWidth: true, size: 'md', onClick: p.onQuote }, 'Request for Quote'),
+      avail ? h(Button, { variant: 'primary', iconLeft: 'settings', fullWidth: !!p.mobile, size: 'lg', onClick: p.onConfigure }, 'Configure') : h(Button, { variant: 'ghost', iconLeft: 'mail', fullWidth: !!p.mobile, size: 'lg', onClick: p.onQuote }, 'Request for Quote'),
       p.mobile && tags.length > 0 && h('div', { className: 'nsl-mcard__expand' },
         h('button', { type: 'button', className: 'nsl-mcard__toggle', 'aria-expanded': ex[0], onClick: function () { ex[1](!ex[0]); } }, h(Icon, { name: ex[0] ? 'chevron-up' : 'chevron-down', size: 16 }), p.suitableTitle || 'Suitable for', ' ', h(CountBadge, { count: tags.length, shape: 'pill' })),
         ex[0] && h('div', { className: 'nsl-mcard__tags' }, tags.map(function (t) { return h(Tag, { key: t, size: 'sm', color: 'neutral' }, t); })))),

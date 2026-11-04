@@ -1,4 +1,4 @@
-<!-- @dsCard group="Forms" height=530 -->
+<!-- @dsCard group="Forms" height=730 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>CheckboxGroup</title>
@@ -66,7 +66,7 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
-ReactDOM.createRoot(document.getElementById('root')).render(h('div',null,V(h('b',null,'Playground'), h(Playground,{name:'CheckboxGroup',component:N.CheckboxGroup,base:{label:'Brand',options:['DELL','Supermicro','HP','Lenovo'],defaultValue:['DELL']},controls:[{prop:'size',type:'enum',value:'md',options:['md','sm']},{prop:'direction',type:'enum',value:'column',options:['column','row']},{prop:'disabled',type:'bool',value:false}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('size="md"', h(N.CheckboxGroup,{label:'Brand',options:['DELL','Supermicro','HP'],defaultValue:['DELL']})), V('size="sm" · filter panels', h(N.CheckboxGroup,{label:'Brand',size:'sm',options:['DELL','Supermicro','HP'],defaultValue:['DELL']})), V('error', h(N.CheckboxGroup,{label:'RAM',size:'sm',options:['DDR3','DDR4','DDR5'],error:'Pick at least one memory type.'})), V('disabled', h(N.CheckboxGroup,{label:'Type',size:'sm',options:['Tower','Rackmount'],disabled:true}))))));
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',null,V(h('b',null,'Playground'), h(Playground,{name:'CheckboxGroup',component:N.CheckboxGroup,wrap:function(e){return h('div',{style:{width:380}},e)},base:{label:'Brand',defaultValue:['DELL','bezel']},controls:[{prop:'options',label:'aside',type:'bool',value:false,map:function(v){return v?[{value:'bezel',label:'HPE 1U Security Bezel Kit',aside:'$ 60'},{value:'rails',label:'HPE ProLiant Rail Kit 1U SFF',aside:'$ 70'},{value:'cable',label:'Cable management arm',aside:'$ 25'}]:['DELL','Supermicro','HP','Lenovo']}},{prop:'size',type:'enum',value:'md',options:['md','sm']},{prop:'direction',type:'enum',value:'column',options:['column','row']},{prop:'disabled',type:'bool',value:false}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('size="md"', h(N.CheckboxGroup,{label:'Brand',options:['DELL','Supermicro','HP'],defaultValue:['DELL']})), V('size="sm" · filter panels', h(N.CheckboxGroup,{label:'Brand',size:'sm',options:['DELL','Supermicro','HP'],defaultValue:['DELL']})), V('error', h(N.CheckboxGroup,{label:'RAM',size:'sm',options:['DDR3','DDR4','DDR5'],error:'Pick at least one memory type.'})), V('disabled', h(N.CheckboxGroup,{label:'Type',size:'sm',options:['Tower','Rackmount'],disabled:true})), V('options with aside · price on the right', h('div',{style:{width:380}}, h(N.CheckboxGroup,{label:'Accessories',options:[{value:'bezel',label:'HPE 1U Security Bezel Kit',aside:'$ 60'},{value:'rails',label:'HPE ProLiant Rail Kit 1U SFF',aside:'$ 70'},{value:'tpm',label:'Trusted Platform Module 2.0 for HPE Gen10 servers',aside:'$ 115'}],defaultValue:['bezel']})))))));
 </script>
 </body>
 </html>
