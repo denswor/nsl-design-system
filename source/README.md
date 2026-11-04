@@ -51,17 +51,18 @@ NewServerLife sells refurbished and new server hardware: servers, chassis, stora
 
 ## Layout
 
-| Width | Columns | Gutter | Side margin | Container |
+| Breakpoint | Width | Columns | Gutter | Side margin / container |
 | --- | --- | --- | --- | --- |
-| 1680 and wider | 12 | `gutter` 30 | `grid-margin-wide` 75 | `container-wide` 1530 |
-| 1024–1679 | 12 | `gutter` 30 | at least `grid-margin-desktop` 35 | up to `container-desktop` 1170 (954 at 1024) |
-| 720–1023 | 8 | `gutter-tablet` 24 | `grid-margin-tablet` 32 | fluid |
-| below 720 | 4 | `gutter-mobile` 16 | `grid-margin-mobile` 16 | fluid |
+| wide | 1680 and wider | 12 | `gutter` 30 | `grid-margin-wide` 75, `container-wide` 1530 |
+| desktop | 1440–1679 | 12 | `gutter` 30 | `container-desktop` 1170 centered |
+| tablet | 1024–1439 | 12 | `gutter` 30 | at least `grid-margin-tablet` 35; fluid (`container-tablet` 954 at 1024) up to 1170 |
+| tablet-portrait | 720–1023 | 8 | `gutter-tablet-portrait` 24 | `grid-margin-tablet-portrait` 32 |
+| mobile | below 720 | 4 | `gutter-mobile` 16 | `grid-margin-mobile` 16 |
 
-- The breakpoints are `breakpoint-tablet` 720, `breakpoint-desktop` 1024 and `breakpoint-wide` 1680. 720 is the same edge the components use for their mobile step.
-- Pages sit in `.nsl-container`, which applies the container and margins above. Blocks align to columns: a two-column hero is 6 + 6 on desktop and 5 + 3 on tablet; a row of cards takes 3 or 4 columns each.
-- `LayoutGrid` overlays the grid on a page or a preview to check alignment. It picks 12 / 8 / 4 columns from its own width. Show it from a toggle; it never ships in production UI.
-- The Figma file has the same grid as variables (`grid/columns`, `grid/gutter`, `grid/margin`, modes Desktop / Tablet / Mobile) and three layout grid styles.
+- Breakpoint tokens: `breakpoint-tablet-portrait` 720, `breakpoint-tablet` 1024, `breakpoint-desktop` 1440, `breakpoint-wide` 1680. 720 is the same edge the components use for their mobile step.
+- Pages sit in `.nsl-container`, which applies the container and margins above. Blocks align to columns: a two-column hero is 6 + 6 from 1024 and 5 + 3 at tablet-portrait; a row of cards takes 3 or 4 columns each.
+- `LayoutGrid` overlays the grid on a page or a preview to check alignment and picks the breakpoint from its own width. Show it from a toggle; it never ships in production UI.
+- Figma: layout grid styles `Grid/Wide Desktop (1680)`, `Grid/Default Desktop (1440)`, `Grid/Tablet (1024)`, `Grid/Tablet Portrait (768)`, `Grid/Mobile (320)`, bound to the `layout/<breakpoint>/…` variables in Primitives.
 - Header is 112px (40px gradient top bar + 72px row). The page body starts on `bg-default`.
 
 ## Iconography

@@ -10,8 +10,8 @@ function Demo() {
   }
   return h('div', { className: 'lg' },
     h('div', { className: 'lg__bar' }, h(N.Toggle, { checked: on, onChange: function (v) { s[1](!!v); } }), 'visible'),
-    h('div', null, h('div', { className: 'lg__l' }, 'auto: this frame’s width picks the grid (12 columns at 1024+)'), h('div', { className: 'lg__frame' }, h(N.LayoutGrid, { visible: on }))),
-    h('div', { className: 'lg__row' }, frame('768 → 8 columns', 768), frame('375 → 4 columns', 375)));
+    h('div', null, h('div', { className: 'lg__l' }, 'auto: this frame’s width picks the grid (12 columns from 1024)'), h('div', { className: 'lg__frame' }, h(N.LayoutGrid, { visible: on }))),
+    h('div', { className: 'lg__row' }, frame('768 → tablet-portrait, 8 columns', 768), frame('375 → mobile, 4 columns', 375)));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
 </script>

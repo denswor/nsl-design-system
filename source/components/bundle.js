@@ -1025,12 +1025,12 @@ function BottomSheet(p) {
 
 /* ---------- Layout (2026-11-04): LayoutGrid ---------- */
 /* Overlay of the page grid for checking layouts. Reads its breakpoint from its own width (container queries),
-   so inside a 768px frame it shows the tablet grid. breakpoint forces one; fixed pins it to the viewport. */
+   so inside a 768px frame it shows the tablet-portrait grid. breakpoint forces one; fixed pins it to the viewport. */
 function LayoutGrid(p) {
   if (p.visible === false) return null;
   var cols = []; for (var i = 0; i < 12; i++) cols.push(h('i', { key: i }));
   var style = Object.assign({}, p.color ? { '--layout-grid-fill': p.color } : null, p.lineColor ? { '--layout-grid-line': p.lineColor } : null, p.style);
-  return h('div', { className: cx('nsl-lgrid', p.fixed && 'nsl-lgrid--fixed', p.breakpoint && p.breakpoint !== 'auto' && 'nsl-lgrid--' + p.breakpoint, p.className), style: style, 'aria-hidden': true },
+  return h('div', { className: cx('nsl-lgrid', p.fixed && 'nsl-lgrid--fixed', 'nsl-lgrid--' + (p.breakpoint || 'auto'), p.className), style: style, 'aria-hidden': true },
     h('div', { className: 'nsl-lgrid__cols' }, cols));
 }
 
