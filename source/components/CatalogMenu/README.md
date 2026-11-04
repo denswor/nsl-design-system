@@ -4,7 +4,8 @@ Desktop mega menu that opens under the header when Catalog is clicked (Figma: Na
 
 - Brand tabs on top: logo (DELL EMC, HPE) over a Mono label; the active brand is pink with a 2px underline.
 - Category chips (Rackmount, NVMe, AMD based, Tower, Blade): the active one is filled brand, the rest outlined. Hidden when the brand has one category.
-- Four columns of blocks: Mono heading with a tag on the right over a hairline, then model links with small tags (`1U`, `2U AMD`).
+- Optional **Bestsellers** strip under the chips (per brand `bestsellers`): thumbnail, name, size tags, Sale or discount chip, optional price. `showBestsellers={false}` hides it (Header: `catalogBestsellers={false}`).
+- Four columns of blocks: NavHeading (Mono heading with a tag on the right over a hairline), then NavModelLink items with small tags (`1U`, `2U AMD`) and optional `sale` / `discount` chips.
 - "All DELL Rackmount Servers" link with a circled arrow, then the contacts row (help icon, "Have any questions? Get in touch.", email, phone) over a blue hairline.
-- Props: `brands` (defaults to the site's server catalog), `brand` / `defaultBrand` / `onBrandChange`, `contacts={false}`, `email`, `phone`. Data: `{ title, logo?: 'dell' | 'hpe', categories: [{ title, all?: {label, href}, columns: [[{ title, tag, items: [[name, tag] | {name, tag, href}] }]] }] }`.
+- Props: `brands` (defaults to the site's server catalog), `brand` / `defaultBrand` / `onBrandChange`, `showBestsellers`, `bestsellersTitle`, `contacts={false}`, `email`, `phone`. Data: `{ title, logo?: 'dell' | 'hpe', categories: [{ title, all?: {label, href}, columns: [[{ title, tag, items: [[name, tag, {sale, discount}?] | {name, tag, tags, sale, discount, price, oldPrice, href}] }]], bestsellers?: [{name, tags, sale, discount, price, oldPrice, image}] }] }`.
 - Header renders it; use it directly only for a custom header.

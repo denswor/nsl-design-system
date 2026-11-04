@@ -1,4 +1,4 @@
-<!-- @dsCard group="Layout" height=1940 width=1440 -->
+<!-- @dsCard group="Navigation" height=2830 width=1440 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>CatalogMenu</title>
@@ -66,11 +66,13 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
+function slot(H,el){return h('div',{style:{position:'relative',height:H,width:'100%'}},h('div',{style:{position:'absolute',top:0,left:0,right:0,height:0}},el));}
 var CART=[{title:'Dell PowerEdge R740',meta:'2× Intel Xeon Gold · 128GB RAM',price:4884},{title:'SSD 800GB SATA 2.5" 6Gb/s',meta:'Tray caddy included',price:680},{title:'HDD 4TB SAS 3.5" 12Gb/s',meta:'Tray caddy included',price:340}];
 
 ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'col'},
- V(h('span',null,h('b',null,'default data'),' · DELL EMC → Rackmount; click brands and categories'), h('div',{className:'stage',style:{height:880}}, h(N.CatalogMenu))),
- V(h('span',null,h('b',null,'defaultBrand={1}'),' · HPE, one category (no chips)'), h('div',{className:'stage',style:{height:520}}, h(N.CatalogMenu,{defaultBrand:1})))));
+ V(h('b',null,'Playground'), h(Playground,{name:'CatalogMenu',component:N.CatalogMenu,wrap:function(e){return slot(940,e)},controls:[{prop:'showBestsellers',type:'bool',value:true},{prop:'defaultBrand',type:'enum',value:0,options:[{value:0,label:'DELL'},{value:1,label:'HPE'},{value:2,label:'Other'}]}]})),
+ V(h('span',null,h('b',null,'showBestsellers={false}'),' · DELL EMC → Rackmount; click brands and categories'), slot(900, h(N.CatalogMenu,{showBestsellers:false}))),
+ V(h('span',null,h('b',null,'defaultBrand={1}'),' · HPE, one category (no chips)'), slot(640, h(N.CatalogMenu,{defaultBrand:1})))));
 
 </script>
 </body>

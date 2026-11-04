@@ -1,8 +1,8 @@
-<!-- @dsCard group="Commerce" height=774 -->
+<!-- @dsCard group="Commerce" height=1700 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>FilterPanel</title>
-<style>body{margin:0;padding:16px;background:var(--bg-default);color:var(--text-primary);font-family:var(--font-sans)}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}</style>
+<style>body{margin:0;padding:16px;background:var(--bg-default);color:var(--text-primary);font-family:var(--font-sans)}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.g{display:flex;flex-wrap:wrap;gap:24px 48px;align-items:flex-start}</style>
 </head>
 <body>
 <div id="root"></div>
@@ -66,7 +66,10 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
-ReactDOM.createRoot(document.getElementById('root')).render(V('size="md" · price range', h(N.FilterPanel,{price:[0,20000],groups:[{title:'Brand',options:['DELL','Supermicro','HP'],selected:['DELL']},{title:'Type',options:['Tower','Rackmount']},{title:'Size',options:['1U','2U','4U','Tower']},{title:'RAM',options:['DDR3','DDR4'],selected:['DDR3']},{title:'Availability',options:['In store','Awaiting (Delivery)']}]})));
+var G=[{title:'Brand',options:['DELL','Supermicro','HP'],selected:['DELL']},{title:'Type',options:['Tower','Rackmount']},{title:'Size',options:['1U','2U','4U','Tower']},{title:'RAM',options:['DDR3','DDR4'],selected:['DDR3']},{title:'Availability',options:['In store','Awaiting (Delivery)']}];
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',null,
+ V(h('b',null,'Playground'), h(Playground,{name:'FilterPanel',component:N.FilterPanel,base:{price:[0,20000],groups:G},controls:[{prop:'size',type:'enum',value:'md',options:['md','sm']}]})),
+ V(h('b',null,'All variants'), h('div',{className:'g'}, V('size="md"', h(N.FilterPanel,{price:[0,20000],groups:G})), V('size="sm"', h(N.FilterPanel,{size:'sm',price:[0,20000],groups:G}))))));
 </script>
 </body>
 </html>

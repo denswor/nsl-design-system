@@ -1,4 +1,4 @@
-<!-- @dsCard group="Display" height=594 -->
+<!-- @dsCard group="Display" height=620 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>Tag</title>
@@ -68,11 +68,11 @@
 var N = window.NSL, h = React.createElement;
 ReactDOM.createRoot(document.getElementById('root')).render(h('div',null, V(h('b',null,'Playground'), h(Playground,{name:'Tag',component:N.Tag,childText:'Rackmount',base:{onClick:function(){}},controls:[
  {prop:'color',type:'enum',value:'neutral',options:['primary','secondary','success','warning','error','neutral']},{prop:'variant',type:'enum',value:'subtle',options:['filled','subtle','outline']},
- {prop:'size',type:'enum',value:'md',options:['lg','md','sm']},{prop:'iconLeft',label:'icon',type:'enum',value:'',omit:'',options:[{label:'none',value:''},{label:'server',value:'server'},{label:'check',value:'check'}]},{prop:'selected',type:'bool',value:false},{prop:'disabled',type:'bool',value:false}]})), V(h('b',null,'All variants'), h('div',{className:'col'},
+ {prop:'size',type:'enum',value:'md',options:['lg','md','sm']},{prop:'icon',type:'enum',value:'server',omit:'',options:[{label:'none',value:''}].concat(['server','ph-cpu','ph-memory','ph-hdd','check','zap','flame','tag','shield','truck','x'].map(function(n){return {label:n,value:n}}))},{prop:'iconPosition',type:'enum',value:'left',options:['left','right']},{prop:'selected',type:'bool',value:false},{prop:'disabled',type:'bool',value:false}]})), V(h('b',null,'All variants'), h('div',{className:'col'},
  V('variant="filled"', h('div',{className:'g'}, ['primary','secondary','success','warning','error','neutral'].map(function(c){return h(N.Tag,{key:c,color:c,variant:'filled'},c)}))),
  V('variant="subtle" (default)', h('div',{className:'g'}, ['primary','secondary','success','warning','error','neutral'].map(function(c){return h(N.Tag,{key:c,color:c},c)}))),
  V('variant="outline"', h('div',{className:'g'}, ['primary','secondary','success','warning','error','neutral'].map(function(c){return h(N.Tag,{key:c,color:c,variant:'outline'},c)}))),
- h('div',{className:'g'}, V('size · lg / md / sm', h('div',{className:'g',style:{alignItems:'center'}}, h(N.Tag,{size:'lg'},'Large'), h(N.Tag,{},'Medium'), h(N.Tag,{size:'sm'},'Small'))), V('iconLeft · clickable', h(N.Tag,{size:'lg',iconLeft:'server',onClick:function(){}},'Rackmount')), V('selected', h(N.Tag,{size:'lg',selected:true,color:'primary',onClick:function(){}},'Selected')), V('disabled', h(N.Tag,{disabled:true,variant:'outline'},'Disabled')), V('icon only', h(N.Tag,{iconLeft:'x','aria-label':'Remove'})))))));
+ h('div',{className:'g'}, V('size · lg / md / sm', h('div',{className:'g',style:{alignItems:'center'}}, h(N.Tag,{size:'lg'},'Large'), h(N.Tag,{},'Medium'), h(N.Tag,{size:'sm'},'Small'))), V('icon · clickable', h(N.Tag,{size:'lg',icon:'server',onClick:function(){}},'Rackmount')), V('iconPosition="right"', h(N.Tag,{icon:'x',iconPosition:'right',onClick:function(){}},'DDR4')), V('selected', h(N.Tag,{size:'lg',selected:true,color:'primary',onClick:function(){}},'Selected')), V('disabled', h(N.Tag,{disabled:true,variant:'outline'},'Disabled')), V('icon only', h(N.Tag,{iconLeft:'x','aria-label':'Remove'})))))));
 </script>
 </body>
 </html>

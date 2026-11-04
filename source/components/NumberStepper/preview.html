@@ -66,7 +66,7 @@
 </script>
 <script>
 var N = window.NSL, h = React.createElement;
-ReactDOM.createRoot(document.getElementById('root')).render(h('div',null, V(h('b',null,'Playground'), h(Playground,{name:'NumberStepper',component:N.NumberStepper,base:{defaultValue:2},controls:[{prop:'compact',type:'bool',value:false},{prop:'disabled',type:'bool',value:false},{prop:'max',type:'number',value:10,min:1,max:99}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('default', h(N.NumberStepper,{defaultValue:2,min:1})), V('disabled', h(N.NumberStepper,{defaultValue:0,disabled:true})), V('compact · inside ConfiguratorRow', h('span',{className:'dark'}, h(N.NumberStepper,{compact:true,defaultValue:14})))))));
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',null, V(h('b',null,'Playground'), h(Playground,{name:'NumberStepper',component:N.NumberStepper,base:{defaultValue:2},controls:[{prop:'compact',type:'bool',value:false},{prop:'disabled',type:'bool',value:false},{prop:'max',type:'number',value:10,min:1,max:99}]})), V(h('b',null,'All variants'), h('div',{className:'g'}, V('default', h(N.NumberStepper,{defaultValue:2,min:1})), V('disabled', h(N.NumberStepper,{defaultValue:0,disabled:true})), V('compact · inside ConfiguratorRow', h('span',{className:'dark'}, h(N.NumberStepper,{compact:true,defaultValue:14}))), V('compact · at min (minus 50% opacity)', h('span',{className:'dark'}, h(N.NumberStepper,{compact:true,defaultValue:1,min:1})))))));
 </script>
 </body>
 </html>

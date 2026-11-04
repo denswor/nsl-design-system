@@ -69,8 +69,8 @@ var N = window.NSL, h = React.createElement;
 ReactDOM.createRoot(document.getElementById('root')).render(h('div',null, V(h('b',null,'Playground'), h(Playground,{name:'ConfiguratorRow',component:N.ConfiguratorRow,base:{label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',info:'Tray caddy included.',price:4884,oldPrice:5200},wrap:function(e){return h('div',{style:{width:'100%',maxWidth:680}},e)},controls:[
  {prop:'selector',type:'enum',value:'checkbox',options:['checkbox','radio']},{prop:'selected',type:'bool',value:true},{prop:'error',type:'bool',value:false},{prop:'tag',type:'enum',value:'Sale',omit:'',options:[{label:'none',value:''},{label:'Sale',value:'Sale'}]},{prop:'stepper',type:'bool',value:true},{prop:'mobile',type:'bool',value:false}]})), V(h('b',null,'All variants'), h('div',{className:'col',style:{maxWidth:680}},
  V('checkbox · default · info · tag', h(N.ConfiguratorRow,{label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',info:'Tray caddy included.',tag:'Sale',price:4884,oldPrice:5200})),
- V('checkbox · selected · stepper', h(N.ConfiguratorRow,{label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',info:'Tray caddy included.',tag:'Sale',price:4884,oldPrice:5200,defaultSelected:true})),
- V('radio · selected · error (incompatible)', h(N.ConfiguratorRow,{label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',selector:'radio',price:4884,oldPrice:4884,defaultSelected:true,defaultQuantity:14,error:true})),
+ V('checkbox · selected · stepper · tag turns white', h(N.ConfiguratorRow,{label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',info:'Tray caddy included.',tag:'Sale',price:4884,oldPrice:5200,defaultSelected:true})),
+ V('radio · selected · error · hover or focus the warning for the reason', h(N.ConfiguratorRow,{label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',selector:'radio',tag:'Sale',price:4884,oldPrice:5200,defaultSelected:true,defaultQuantity:14,error:'Not compatible with the PERC H330 controller. Choose a SAS drive.'})),
  V('mobile · selected', h('div',{style:{maxWidth:340}}, h(N.ConfiguratorRow,{mobile:true,label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',price:4884,oldPrice:5200,defaultSelected:true})))))));
 </script>
 </body>

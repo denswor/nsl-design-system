@@ -1,4 +1,4 @@
-<!-- @dsCard group="Layout" height=3690 -->
+<!-- @dsCard group="Navigation" height=3930 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>MobileNav</title>
@@ -67,8 +67,8 @@
 <script>
 var N = window.NSL, h = React.createElement;
 var DELL={title:'DELL EMC',groups:[
- {title:'Bestsellers',kind:'bestsellers',items:[{name:'Dell PowerEdge R640',tags:['1U','Gen14']},{name:'Dell PowerEdge R740xd',tags:['2U','Gen14']},{name:'Dell PowerEdge R730',tags:['2U','Gen13']}]},
- {title:'Rackmount servers',subgroups:[{title:'13th Generation',tag:'Rack',items:[{name:'Dell PowerEdge R430',tag:'1U'},{name:'Dell PowerEdge R630',tag:'1U'},{name:'Dell PowerEdge R730',tag:'2U'},{name:'Dell PowerEdge R730xd',tag:'2U'}]},{title:'14th Generation',tag:'Rack',items:[{name:'Dell PowerEdge R640',tag:'1U'},{name:'Dell PowerEdge R740',tag:'2U'},{name:'Dell PowerEdge R740xd',tag:'2U'}]}]},
+ {title:'Bestsellers',kind:'bestsellers',items:[{name:'Dell PowerEdge R640',tags:['1U','Gen14'],sale:true},{name:'Dell PowerEdge R740xd',tags:['2U','Gen14']},{name:'Dell PowerEdge R730',tags:['2U','Gen13']}]},
+ {title:'Rackmount servers',subgroups:[{title:'13th Generation',tag:'Rack',items:[{name:'Dell PowerEdge R430',tag:'1U'},{name:'Dell PowerEdge R630',tag:'1U'},{name:'Dell PowerEdge R730',tag:'2U'},{name:'Dell PowerEdge R730xd',tag:'2U'}]},{title:'14th Generation',tag:'Rack',items:[{name:'Dell PowerEdge R640',tag:'1U',sale:true},{name:'Dell PowerEdge R740',tag:'2U',discount:15},{name:'Dell PowerEdge R740xd',tag:'2U'}]}]},
  {title:'Tower servers',subgroups:[{title:'14th Generation',tag:'Tower',items:[{name:'Dell PowerEdge T440'},{name:'Dell PowerEdge T640'}]}]},
  {title:'Blade servers',subgroups:[{title:'M-series',tag:'Blade',items:['Dell PowerEdge M630','Dell PowerEdge M640']}]}]};
 var BRANDS=[DELL,{title:'HPE',groups:[{title:'Bestsellers',kind:'bestsellers',items:[{name:'HPE ProLiant DL360 Gen10',tags:['1U','Gen10']},{name:'HPE ProLiant DL380 Gen10',tags:['2U','Gen10']}]},{title:'Rackmount servers',subgroups:[{title:'Gen10',tag:'Rack',items:[{name:'HPE ProLiant DL360',tag:'1U'},{name:'HPE ProLiant DL380',tag:'2U'}]}]}]},{title:'Other',groups:[{title:'Rackmount servers',subgroups:[{title:'Supermicro',tag:'Rack',items:['Supermicro 1029U','Supermicro 2029U']}]}]}];
@@ -77,10 +77,11 @@ var CART=[{title:'Dell PowerEdge R740',meta:'2× Intel Xeon Gold · 128GB RAM',p
 function phone(el){return h('div',{style:{width:375,border:'1px solid var(--border-default)',borderRadius:8,overflow:'hidden',background:'var(--bg-default)'}},el);}
 
 ReactDOM.createRoot(document.getElementById('root')).render(h('div',null,
- V(h('b',null,'Playground'), h(Playground,{name:'MobileNav',component:N.MobileNav,base:{brands:BRANDS,categories:CATS,defaultBrand:0},wrap:phone,controls:[{prop:'teaser',type:'enum',value:'light',options:['light','dark',{value:false,label:'false'}]},{prop:'showTabs',type:'bool',value:false},{prop:'defaultTab',label:'defaultTab',type:'enum',value:'servers',options:['servers','components']}]})),
+ V(h('b',null,'Playground'), h(Playground,{name:'MobileNav',component:N.MobileNav,base:{brands:BRANDS,categories:CATS,defaultBrand:0},wrap:phone,controls:[{prop:'showBestsellers',type:'bool',value:true},{prop:'teaser',type:'enum',value:'light',options:['light','dark',{value:false,label:'false'}]},{prop:'showTabs',type:'bool',value:false},{prop:'defaultTab',label:'defaultTab',type:'enum',value:'servers',options:['servers','components']}]})),
  V(h('b',null,'All variants'), h('div',{className:'g'},
   V(h('span',null,h('b',null,'teaser="light"'),' · DELL EMC open'), phone(h(N.MobileNav,{brands:BRANDS,defaultBrand:0,teaser:'light'}))),
   V(h('span',null,h('b',null,'teaser="dark"'),' · all collapsed'), phone(h(N.MobileNav,{brands:BRANDS,teaser:'dark'}))),
+  V(h('span',null,h('b',null,'showBestsellers={false}'),' · DELL EMC open'), phone(h(N.MobileNav,{brands:BRANDS,defaultBrand:0,showBestsellers:false,teaser:false}))),
   V(h('span',null,h('b',null,'showTabs'),' · Components tab'), phone(h(N.MobileNav,{brands:BRANDS,categories:CATS,showTabs:true,defaultTab:'components'})))))));
 </script>
 </body>

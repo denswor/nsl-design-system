@@ -63,7 +63,7 @@ const ssr = (name, props) => ReactDOMServer.renderToStaticMarkup(React.createEle
 const ICON_NAMES = NSL.icons.slice();
 
 /* ---------------------------------------------------------------- components */
-const GROUP_ORDER = ['Foundations', 'Actions', 'Forms', 'Navigation', 'Layout', 'Display', 'Feedback', 'Media', 'Commerce', 'Content', 'Search', 'Other'];
+const GROUP_ORDER = ['Foundations', 'Actions', 'Forms', 'Navigation', 'Layout', 'Display', 'Feedback', 'Media', 'Cards', 'Commerce', 'Content', 'Search', 'Other'];
 const compDir = path.join(SRC, 'components');
 const components = fs.readdirSync(compDir).filter((d) => fs.existsSync(path.join(compDir, d, 'preview.html')) && NSL[d]).sort();
 
