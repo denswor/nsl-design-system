@@ -763,14 +763,21 @@ function ConfiguratorRow(p) {
   var c = useCtl(p.selected, !!p.defaultSelected, p.onSelect); var qty = useCtl(p.quantity, p.defaultQuantity || 1, p.onQuantityChange);
   var C = p.selector === 'radio' ? Radio : Checkbox;
   var on = c[0];
-  return h('div', { className: cx('nsl-crow', p.mobile && 'nsl-crow--mobile', on && 'is-selected', p.error && 'is-error', p.className) },
+  /* The whole row is the hit area: a click on empty space or the price selects (radio) or toggles (checkbox).
+     Clicks on the control's own label, the stepper, tooltips and other interactive bits keep their own behaviour. */
+  function rowClick(e) {
+    if (e.defaultPrevented || e.target.closest('label, input, button, a, select, textarea, [tabindex], [role="dialog"], .nsl-crow__qty, .nsl-tip, .nsl-pop')) return;
+    c[1](p.selector === 'radio' ? true : !on);
+  }
+  var hasQty = on && p.stepper !== false;
+  return h('div', { className: cx('nsl-crow', p.mobile && 'nsl-crow--mobile', hasQty && 'has-qty', on && 'is-selected', p.error && 'is-error', p.className), onClick: rowClick },
     h('div', { className: 'nsl-crow__main' },
       h(C, { size: 'sm', checked: on, name: p.name, onChange: function (v) { c[1](p.selector === 'radio' ? true : v); }, label: p.label, error: p.error }),
       p.info && h(Tooltip, { content: p.info }),
       p.tag && h('span', { className: 'nsl-crow__tag' }, p.tag)),
     h('div', { className: 'nsl-crow__side' },
       p.error && h(Tooltip, { content: typeof p.error === 'string' ? p.error : (p.errorText || 'Not compatible with the current configuration.'), placement: 'top', align: 'end', tone: 'dark' }, h('span', { className: 'nsl-crow__warn', tabIndex: 0, role: 'img', 'aria-label': 'Incompatible option' }, h(Icon, { name: 'alert-triangle', size: 16 }))),
-      on && p.stepper !== false && h('span', { className: 'nsl-crow__qty' }, h(NumberStepper, { compact: true, value: qty[0], min: 1, onChange: qty[1] }), h('span', { className: 'nsl-crow__unit' }, 'pcs.')),
+      hasQty && h('span', { className: 'nsl-crow__qty' }, h(NumberStepper, { compact: true, value: qty[0], min: 1, onChange: qty[1] }), h('span', { className: 'nsl-crow__unit' }, 'pcs.')),
       p.oldPrice && h('s', { className: 'nsl-crow__old' }, money(p.oldPrice)),
       h('b', { className: 'nsl-crow__price' }, money(p.price)), h('span', { className: 'nsl-crow__unit' }, p.unit || '/ ea.')));
 }
