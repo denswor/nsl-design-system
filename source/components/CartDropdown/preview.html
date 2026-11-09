@@ -67,7 +67,7 @@
 <script>
 var N = window.NSL, h = React.createElement;
 var IT=[{title:'Dell PowerEdge R740',meta:'2× Intel Xeon Gold · 128GB RAM',price:4884},{title:'SSD 800GB SATA 2.5" 6Gb/s',meta:'Tray caddy included',price:680},{title:'HDD 4TB SAS 3.5" 12Gb/s',meta:'Tray caddy included',price:340}];
-ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'g',style:{paddingTop:12}}, V('with items', h(N.CartDropdown,{items:IT})), V(h('span',null,h('b',null,'arrow'),' · points at the trigger (end, 24px)'), h(N.CartDropdown,{items:IT,arrow:true})), V(h('span',null,h('b',null,'arrow="start"'),' · empty'), h(N.CartDropdown,{items:[],arrow:'start'}))));
+ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'g',style:{paddingTop:12}}, V('with items', h(N.CartDropdown,{items:IT})), V(h('span',null,h('b',null,'arrow'),' · points at the trigger (end, 24px)'), h(N.CartDropdown,{items:IT,arrow:true})), V(h('span',null,h('b',null,'arrow="start"'),' · empty'), h(N.CartDropdown,{items:[],arrow:'start'})), V(h('span',null,h('b',null,'size="sm"'),' · 14/20, for phones'), h(N.CartDropdown,{items:IT,size:'sm'}))));
 </script>
 </body>
 </html>

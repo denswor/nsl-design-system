@@ -2,7 +2,7 @@
 
 One selectable option in the server configurator: selector, name, info, tag, quantity, prices.
 
-- Props: `label`, `selector` = `checkbox` | `radio`, `name` (radio group), `selected` / `defaultSelected`, `onSelect`, `info` (tooltip text), `tag` ("SALE"), `price`, `oldPrice`, `unit`, `quantity` / `defaultQuantity`, `onQuantityChange`, `stepper` (`false` hides it), `error` (incompatible choice: red tint, warning icon right after the stepper with a tooltip; pass a string for the reason, or `errorText`), `mobile` (phone layout, see below).
+- Props: `label`, `selector` = `checkbox` | `radio`, `name` (radio group), `selected` / `defaultSelected`, `onSelect`, `info` (tooltip text), `tag` ("SALE"), `price`, `oldPrice`, `unit`, `quantity` / `defaultQuantity`, `onQuantityChange`, `stepper` (`false` hides it), `error` (incompatible choice: red tint, warning icon with a tooltip — on desktop to the left of the stepper, in the `mobile` layout right after "pcs.", so the stepper never moves from row to row; pass a string for the reason, or `errorText`), `mobile` (phone layout, see below).
 - Selected row fills with `brand-default`: this is state, not a second CTA.
 
 - On the selected row the tag turns white with brand text so it doesn't merge with the fill; on an error row it turns red.
