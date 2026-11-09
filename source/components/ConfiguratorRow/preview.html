@@ -1,4 +1,4 @@
-<!-- @dsCard group="Commerce" height=623 -->
+<!-- @dsCard group="Commerce" height=1180 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>ConfiguratorRow</title>
@@ -71,7 +71,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(h('div',null, V(h('b
  V('checkbox · default · info · tag', h(N.ConfiguratorRow,{label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',info:'Tray caddy included.',tag:'Sale',price:4884,oldPrice:5200})),
  V('checkbox · selected · stepper · tag turns white', h(N.ConfiguratorRow,{label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',info:'Tray caddy included.',tag:'Sale',price:4884,oldPrice:5200,defaultSelected:true})),
  V('radio · selected · error · hover or focus the warning for the reason', h(N.ConfiguratorRow,{label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',selector:'radio',tag:'Sale',price:4884,oldPrice:5200,defaultSelected:true,defaultQuantity:14,error:'Not compatible with the PERC H330 controller. Choose a SAS drive.'})),
- V('mobile · selected', h('div',{style:{maxWidth:340}}, h(N.ConfiguratorRow,{mobile:true,label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',price:4884,oldPrice:5200,defaultSelected:true})))))));
+ )), V(h('b',{style:{display:'block',marginTop:24}},'Mobile · 343px'), h('div',{className:'col',style:{maxWidth:343}},
+ V('no stepper · short name · one line', h(N.ConfiguratorRow,{mobile:true,selector:'radio',name:'m-raid',label:'Dell HBA355i Front Host Bus Adapter',price:140,stepper:false,unit:' '})),
+ V('no stepper · long name wraps, price stays on the right', h(N.ConfiguratorRow,{mobile:true,selector:'radio',name:'m-raid',label:'Dell PERC H755 Front RAID Controller with 8GB Cache',price:1390,stepper:false,unit:' '})),
+ V('no stepper · selected', h(N.ConfiguratorRow,{mobile:true,selector:'radio',name:'m-raid2',label:'Dell PERC H355 Front RAID Controller',price:590,stepper:false,unit:' ',defaultSelected:true})),
+ V('stepper · short name · stepper and price on line 2', h(N.ConfiguratorRow,{mobile:true,label:'HDD 8TB SAS 12Gb/s',price:280,defaultSelected:true,defaultQuantity:4})),
+ V('stepper · long name wraps', h(N.ConfiguratorRow,{mobile:true,label:'Microsoft Windows Server 2025 Datacenter 16-Core License',price:6770,defaultSelected:true,defaultQuantity:4})),
+ V('stepper · old price · error (tap the warning)', h(N.ConfiguratorRow,{mobile:true,label:'SSD 800GB SATA 2.5" 6Gb/s with Tray caddy',price:4884,oldPrice:5200,defaultSelected:true,defaultQuantity:14,error:'Not compatible with the PERC H330 controller. Choose a SAS drive.'}))))));
 </script>
 </body>
 </html>
