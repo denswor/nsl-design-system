@@ -1030,7 +1030,7 @@ span.nsl-tag--filled:hover { background: var(--tc); } span.nsl-tag--subtle:hover
 .nsl-catmenu__bitem { display: grid; grid-template-columns: 56px minmax(0, 1fr); column-gap: 12px; row-gap: 4px; align-items: center; padding: 4px 0; }
 .nsl-catmenu__thumb { grid-row: 1 / span 3; width: 56px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--bg-subtle); border-radius: var(--radius-sm); color: var(--icon-default); overflow: hidden; }
 .nsl-catmenu__thumb img { width: 100%; height: 100%; object-fit: contain; }
-.nsl-catmenu__bname { font: 400 14px/16px var(--font-sans); color: var(--text-primary); }
+.nsl-catmenu__bitem .nsl-catmenu__bname { font: 400 14px/16px var(--font-sans); color: var(--text-primary); }
 .nsl-catmenu__bitem:hover .nsl-catmenu__bname { color: var(--secondary-default); text-decoration: underline; }
 .nsl-catmenu__btags { display: flex; flex-wrap: wrap; gap: 4px; }
 .nsl-catmenu__bitem .nsl-navlink__price { grid-column: 2; }
@@ -1210,3 +1210,14 @@ a.nsl-navhead:focus-visible { outline: none; box-shadow: var(--shadow-focus); bo
 .nsl-tip__bubble--top, .nsl-tip__bubble--bottom { transform: translateX(calc(-50% + var(--fl-shift, 0px))); }
 .nsl-tip__bubble--start, .nsl-tip__bubble--end { transform: translateX(var(--fl-shift, 0px)); }
 .nsl-tip__bubble::after { translate: calc(-1 * var(--fl-shift, 0px)) 0; }
+
+/* ---------- Current menu item: primary text, bold, 3px primary underline (top nav on light surfaces, catalog brands, mobile catalog tabs, "…" overflow) ---------- */
+.nsl-topnav__item { border-bottom-width: 3px; }
+.nsl-topnav__item.is-active { font-weight: 700; color: var(--brand-default); border-bottom-color: var(--brand-default); }
+/* On the gradient pink text would not read: the current item stays white, bold, with a 3px white rule. */
+.nsl-on-dark .nsl-topnav__item.is-active { color: var(--nav-text-active); border-bottom-color: currentColor; }
+.nsl-catmenu__brand { font-weight: 400 !important; border-bottom-width: 3px !important; }
+.nsl-catmenu__brand.is-active { font-weight: 700 !important; color: var(--brand-default) !important; border-bottom-color: var(--brand-default) !important; }
+.nsl-mnav__tab { font-weight: 400 !important; border-bottom-width: 3px !important; }
+.nsl-mnav__tab.is-active { font-weight: 700 !important; color: var(--brand-default) !important; border-bottom-color: var(--brand-default) !important; }
+.nsl-topnav__overflow a.is-active { font-weight: 700; color: var(--brand-default); text-decoration: underline; text-decoration-color: var(--brand-default); text-decoration-thickness: 3px; text-underline-offset: 5px; }
