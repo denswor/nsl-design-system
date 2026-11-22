@@ -98,7 +98,7 @@ code, kbd, pre { font-family: var(--font-mono); }
 
 /* color */
 .sws { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
-.sw { display: grid; grid-template-columns: 40px 1fr; column-gap: 12px; row-gap: 2px; padding: 10px; border: 1px solid var(--border-default); border-radius: var(--radius-md); cursor: pointer; align-items: start; }
+.sw { display: grid; grid-template-columns: 40px 1fr; column-gap: 12px; row-gap: 2px; padding: 10px; border: 1px solid var(--border-default); border-radius: var(--radius-md); cursor: pointer; align-items: start; align-content: start; }
 .sw:hover { border-color: var(--border-strong, var(--text-secondary)); }
 .sw__chip { grid-row: 1 / span 3; width: 40px; height: 40px; border-radius: var(--radius-sm); box-shadow: inset 0 0 0 1px var(--black-alpha-10); background-image: none; }
 .sw__name { font: 600 12.5px/18px var(--font-mono); word-break: break-all; }
